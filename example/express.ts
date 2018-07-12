@@ -1,8 +1,9 @@
-import { boostrap, getEndpointMetadata, getServiceMetadata } from 'lambda';
 import { StoryService } from './api/story/story.service';
 import debug = require('debug');
 // module dependencies.
 import express = require('express');
+import { boostrap } from '../src/lib';
+import { getEndpointMetadata } from '../src';
 
 const d: debug.IDebugger = debug('lambda:example:express.ts');
 

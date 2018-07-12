@@ -1,4 +1,4 @@
-import { Service, Endpoint } from 'lambda';
+import { Endpoint, Service } from '../../../src';
 
 @Service({
     name: 'storyService'
