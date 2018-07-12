@@ -1,5 +1,5 @@
 {
-  "name": "lambda",
+  "name": "@microgamma/lambda",
   "version": "1.0.0",
   "description": "you'll love your lambdas",
   "main": "build/main/index.js",
