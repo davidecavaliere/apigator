@@ -1,4 +1,4 @@
-import { Endpoint, Service } from '../../../src';
+import { Endpoint, Service } from '@microgamma/lambda';
 
 @Service({
     name: 'storyService'

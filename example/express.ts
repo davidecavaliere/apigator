@@ -2,7 +2,7 @@ import { StoryService } from './api/story/story.service';
 import debug = require('debug');
 // module dependencies.
 import express = require('express');
-import { boostrap } from '../src/lib';
+import { boostrap } from '@microgamma/lambda';
 import { getEndpointMetadata } from '../src';
 
 const d: debug.IDebugger = debug('lambda:example:express.ts');

@@ -14,10 +14,8 @@
     "types": ["node"],
     "typeRoots": ["node_modules/@types"]
   },
-  "include": ["./**/*.ts"],
+  "include": ["./handler.ts"],
   "exclude": [
-    "api/user",
-    "lib",
     "node_modules"
   ]
 }
