@@ -10,87 +10,87 @@ export const EndpointMetadata = Symbol('Endpoint');
 
 
 export interface EndpointOptions {
-    name?: string;
-    readonly path: string;
-    readonly method: string;
+  name?: string;
+  readonly path: string;
+  readonly method: string;
 
 }
 
 export function Endpoint(options: EndpointOptions) {
-    d('constructing a class decorator', options)
-    return (target: any, key: string, descriptor) => {
-        d('decorating method')
-        d(target);
-        d(key);
-        d(descriptor);
+  d('constructing a class decorator', options)
+  return (target: any, key: string, descriptor) => {
+    d('decorating method')
+    d(target);
+    d(key);
+    d(descriptor);
 
-        options.name = options.name || key;
+    options.name = options.name || key;
 
-        const endpoints = getEndpointMetadata(target).concat(options);
-        // console.log('endpoints: ', endpoints);
-
-
-        Reflect.defineMetadata(EndpointMetadata, endpoints, target);
+    const endpoints = getEndpointMetadata(target).concat(options);
+    // console.log('endpoints: ', endpoints);
 
 
-        const originalFunction = descriptor.value;
-        d('original function is', originalFunction);
+    Reflect.defineMetadata(EndpointMetadata, endpoints, target);
 
 
-        // how actual are rappresented depends on the
-        // real framework that is being used to ran the function
-        descriptor.value = (...args: any[]) => {
-            return new Promise((resolve, reject) => {
+    const originalFunction = descriptor.value;
+    d('original function is', originalFunction);
 
-                const originalArgs = annotate(originalFunction);
-                d('original args are: ', originalArgs);
 
-                d('actual args are: ', args);
+    // how actual are rappresented depends on the
+    // real framework that is being used to ran the function
+    descriptor.value = (...args: any[]) => {
+      return new Promise((resolve, reject) => {
 
-                const instance = getSingleton(target.constructor.name);
-                d('current instance is:', instance);
-                /*
-                    At this point args is an array
-                    I.E.:
-                     - if running on express then this array would contain [req, res, nex]
-                     - if running on AWS lambda would be [event, context, cb]
-                    and so on
-                 */
-                // TODO: here we need to handle arguments extrapolation
-                // from the original function and map
+        const originalArgs = annotate(originalFunction);
+        d('original args are: ', originalArgs);
 
-                const newArgs = originalArgs.map((arg) => {
-                    d('parsing', arg);
-                    if (!args[0][arg]) {
-                        reject(`argument <${arg}> not found `);
-                    }
-                   return args[0][arg];
-                });
+        d('actual args are: ', args);
 
-                // this will work only for aws lambdas
-                // const event = args[0];
-                // const context = args[1];
-                const cb = args[2];
-                d('callback is', cb);
-                d('-----------------');
-                const retValue = originalFunction.apply(instance, newArgs);
+        const instance = getSingleton(target.constructor.name);
+        d('current instance is:', instance);
+        /*
+            At this point args is an array
+            I.E.:
+             - if running on express then this array would contain [req, res, nex]
+             - if running on AWS lambda would be [event, context, cb]
+            and so on
+         */
+        // TODO: here we need to handle arguments extrapolation
+        // from the original function and map
 
-                cb(null, retValue, instance);
-                resolve(retValue);
+        const newArgs = originalArgs.map((arg) => {
+          d('parsing', arg);
+          if (!args[0][arg]) {
+            reject(`argument <${arg}> not found `);
+          }
+          return args[0][arg];
+        });
 
-            });
+        // this will work only for aws lambdas
+        // const event = args[0];
+        // const context = args[1];
+        const cb = args[2];
+        d('callback is', cb);
+        d('-----------------');
+        const retValue = originalFunction.apply(instance, newArgs);
 
-        }
+        cb(null, retValue, instance);
+        resolve(retValue);
 
-        return descriptor;
+      });
 
-    }
+    };
+
+    return descriptor;
+
+  }
 
 }
 
 export function getEndpointMetadata(instance) {
-    const metadata = Reflect.getMetadata(EndpointMetadata, instance);
-    return metadata ? [].concat(metadata) : [];
+  const metadata = Reflect.getMetadata(EndpointMetadata, instance);
+  return metadata ? [].concat(metadata) : [];
 }
 
 const FN_ARGS = /^[a-zA_Z]\s*[^\(]*\(\s*([^\)]*)\)/m;
@@ -112,24 +112,25 @@ const STRIP_COMMENTS = /((\/\/.*$)|(\/\*[\s\S]*?\*\/))/mg;
  * @param fn
  * @returns {string[]}
  */
-function annotate(fn: any) {
-    const $inject: string[] = [];
-    let fnText;
-    let argDecl;
+function annotate(fn: (...args) => any) {
+  const $inject: string[] = [];
+  let fnText;
+  let argDecl;
 
-    if (typeof fn === 'function') {
-        fnText = fn.toString().replace(STRIP_COMMENTS, '');
-        argDecl = fnText.match(FN_ARGS);
-        argDecl[1].split(FN_ARG_SPLIT).forEach(function (arg: any) {
-            arg.replace(FN_ARG, function (all: any, underscore: any, name: any) {
-                // console.log(all, underscore);
-                $inject.push(name);
-            });
-        });
+  if (typeof fn === 'function') {
+    fnText = fn.toString().replace(STRIP_COMMENTS, '');
+    console.log(fnText);
+    argDecl = fnText.match(FN_ARGS);
+    argDecl[1].split(FN_ARG_SPLIT).forEach(function (arg: any) {
+      arg.replace(FN_ARG, function (all: any, underscore: any, name: any) {
+        // console.log(all, underscore);
+        $inject.push(name);
+      });
+    });
 
-    } else {
-        throw Error('fn is not a function');
-    }
+  } else {
+    throw Error('fn is not a function');
+  }
 
-    return $inject;
+  return $inject;
 }
