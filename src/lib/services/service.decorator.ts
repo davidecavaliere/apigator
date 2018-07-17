@@ -1,6 +1,6 @@
 import 'reflect-metadata';
 
-export const ServiceMetadata = Symbol('Service');
+const ServiceMetadata = Symbol('Service');
 
 export interface ServiceOptions {
     readonly name: string;
@@ -8,7 +8,7 @@ export interface ServiceOptions {
 
 export function Service(options: ServiceOptions): ClassDecorator {
     // console.log('constructing a class decorator', options)
-    return (target) => {
+    return <TFunction extends Function>(target: TFunction)=> {
         // console.log('decorating a class', target);
         Reflect.metadata(ServiceMetadata, options)(target);
     }
