@@ -19,7 +19,7 @@ export interface EndpointOptions {
 export function Endpoint(options: EndpointOptions) {
   d('constructing a class decorator', options)
   return (target: any, key: string, descriptor) => {
-    d('decorating method')
+    d('decorating method');
     d(target);
     d(key);
     d(descriptor);
@@ -90,6 +90,7 @@ export function Endpoint(options: EndpointOptions) {
 
 export function getEndpointMetadata(instance) {
   const metadata = Reflect.getMetadata(EndpointMetadata, instance);
+  console.log('metadata', metadata);
   return metadata ? [].concat(metadata) : [];
 }
 

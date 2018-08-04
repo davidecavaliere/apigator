@@ -3,11 +3,10 @@ import debug = require('debug');
 // module dependencies.
 import express = require('express');
 import { boostrap } from '@microgamma/lambda';
-import { getEndpointMetadata } from '../src';
+import { getEndpointMetadata, getServiceMetadata } from '@microgamma/lambda';
+import 'reflect-metadata';
 
 const d: debug.IDebugger = debug('lambda:example:express.ts');
-
-d('----------------------------------');
 
 
 const app = express();
@@ -17,8 +16,6 @@ const port = 8080;
 app.set('port', port);
 
 
-
-
 // add error handler
 // server.on('error', onError);
 
@@ -26,6 +23,7 @@ app.set('port', port);
 // server.on('listening', onListening);
 
 const service: StoryService = boostrap(StoryService, '');
+d('service', getServiceMetadata(StoryService));
 
 
 app.get('/echo/:word', (req, res) => {
@@ -33,6 +31,7 @@ app.get('/echo/:word', (req, res) => {
 });
 
 const endpoints = getEndpointMetadata(service);
+d('endpoints', endpoints);
 
 for (const endpoint of endpoints) {
     d('adding endpoint', endpoint);
@@ -56,5 +55,5 @@ for (const endpoint of endpoints) {
 
 // create http server
 const server = app.listen(port, () => {
-    d('express is running');
+    console.log(`express is running on port ${port}`);
 });
