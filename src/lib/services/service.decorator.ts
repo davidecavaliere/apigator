@@ -3,18 +3,17 @@ import 'reflect-metadata';
 const ServiceMetadata = Symbol('Service');
 
 export interface ServiceOptions {
-    readonly name: string;
+  readonly name: string;
 }
 
 export function Service(options: ServiceOptions): ClassDecorator {
-    // console.log('constructing a class decorator', options)
-    return <TFunction extends Function>(target: TFunction)=> {
-        // console.log('decorating a class', target);
-        Reflect.metadata(ServiceMetadata, options)(target);
-    }
+  // console.log('constructing a class decorator', options)
+  return <TFunction extends Function>(target: TFunction) => {
+    // console.log('decorating a class', target);
+    Reflect.metadata(ServiceMetadata, options)(target);
+  };
 }
 
 export function getServiceMetadata(instance) {
-    return Reflect.getMetadata(ServiceMetadata, instance.constructor);
+  return Reflect.getMetadata(ServiceMetadata, instance.constructor);
 }
-

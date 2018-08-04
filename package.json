@@ -1,7 +1,7 @@
 {
-  "name": "@microgamma/lambda",
+  "name": "@microgamma/apigator",
   "version": "1.0.0",
-  "description": "you'll love your lambdas",
+  "description": "run your api code everywhere",
   "main": "build/main/index.js",
   "typings": "build/main/index.d.ts",
   "module": "build/module/index.js",

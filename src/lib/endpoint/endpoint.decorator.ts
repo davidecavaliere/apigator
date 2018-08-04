@@ -8,16 +8,14 @@ const d = debug('lambda:endpoint');
 
 export const EndpointMetadata = Symbol('Endpoint');
 
-
 export interface EndpointOptions {
   name?: string;
   readonly path: string;
   readonly method: string;
-
 }
 
 export function Endpoint(options: EndpointOptions) {
-  d('constructing a class decorator', options)
+  d('constructing a class decorator', options);
   return (target: any, key: string, descriptor) => {
     d('decorating method');
     d(target);
@@ -29,19 +27,15 @@ export function Endpoint(options: EndpointOptions) {
     const endpoints = getEndpointMetadata(target).concat(options);
     // console.log('endpoints: ', endpoints);
 
-
     Reflect.defineMetadata(EndpointMetadata, endpoints, target);
-
 
     const originalFunction = descriptor.value;
     d('original function is', originalFunction);
-
 
     // how actual are rappresented depends on the
     // real framework that is being used to ran the function
     descriptor.value = (...args: any[]) => {
       return new Promise((resolve, reject) => {
-
         const originalArgs = annotate(originalFunction);
         d('original args are: ', originalArgs);
 
@@ -59,7 +53,7 @@ export function Endpoint(options: EndpointOptions) {
         // TODO: here we need to handle arguments extrapolation
         // from the original function and map
 
-        const newArgs = originalArgs.map((arg) => {
+        const newArgs = originalArgs.map(arg => {
           d('parsing', arg);
           if (!args[0][arg]) {
             reject(`argument <${arg}> not found `);
@@ -77,15 +71,11 @@ export function Endpoint(options: EndpointOptions) {
 
         cb(null, retValue, instance);
         resolve(retValue);
-
       });
-
     };
 
     return descriptor;
-
-  }
-
+  };
 }
 
 export function getEndpointMetadata(instance) {
@@ -97,7 +87,7 @@ export function getEndpointMetadata(instance) {
 const FN_ARGS = /^[a-zA_Z]\s*[^\(]*\(\s*([^\)]*)\)/m;
 const FN_ARG_SPLIT = /,/;
 const FN_ARG = /^\s*(_?)(.+?)\1\s*$/;
-const STRIP_COMMENTS = /((\/\/.*$)|(\/\*[\s\S]*?\*\/))/mg;
+const STRIP_COMMENTS = /((\/\/.*$)|(\/\*[\s\S]*?\*\/))/gm;
 
 /**
  * Returns an array of arguments' name of the given function
@@ -122,13 +112,12 @@ function annotate(fn: (...args) => any) {
     fnText = fn.toString().replace(STRIP_COMMENTS, '');
     console.log(fnText);
     argDecl = fnText.match(FN_ARGS);
-    argDecl[1].split(FN_ARG_SPLIT).forEach(function (arg: any) {
-      arg.replace(FN_ARG, function (all: any, underscore: any, name: any) {
+    argDecl[1].split(FN_ARG_SPLIT).forEach(function(arg: any) {
+      arg.replace(FN_ARG, function(all: any, underscore: any, name: any) {
         // console.log(all, underscore);
         $inject.push(name);
       });
     });
-
   } else {
     throw Error('fn is not a function');
   }

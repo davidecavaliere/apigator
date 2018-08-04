@@ -5,29 +5,26 @@ import { Service } from './services/service.decorator';
 import { Endpoint } from './endpoint/endpoint.decorator';
 
 @Service({
-    name: 'test-service'
+  name: 'test-service'
 })
 class TestClass {
-
-    @Endpoint({
-        method: 'get',
-        name: 'manifest',
-        path: '/'
-    })
-    public manifest() {
-
-    }
+  @Endpoint({
+    method: 'get',
+    name: 'manifest',
+    path: '/'
+  })
+  public manifest() {
+    console.log('manifest');
+  }
 }
 
-test.only('bootstrapExpress', (t) => {
-    const app = {
-      get: (...args) => {
-        // console.log('setting args', args);
-      }
+test.only('bootstrapExpress', t => {
+  const app = {
+    get: (...args) => {
+      // console.log('setting args', args);
     }
-    const inst = bootstrapExpress(TestClass, app);
+  };
+  const inst = bootstrapExpress(TestClass, app);
 
-
-
-    t.is(inst instanceof TestClass, true);
+  t.is(inst instanceof TestClass, true);
 });

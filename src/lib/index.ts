@@ -3,7 +3,6 @@
 const singletons = {};
 
 export function boostrap(classDef: any, engine: string) {
-
   const inst = new classDef();
 
   singletons[classDef.name] = inst;
@@ -12,16 +11,13 @@ export function boostrap(classDef: any, engine: string) {
 }
 
 export function bootstrapExpress(classDef: any, app: any) {
+  const inst = new classDef();
 
-    const inst = new classDef();
+  singletons[classDef.name] = inst;
 
-    singletons[classDef.name] = inst;
-
-
-
-    return inst;
+  return inst;
 }
 
 export function getSingleton(className: string) {
-    return singletons[className] || null;
+  return singletons[className] || null;
 }
