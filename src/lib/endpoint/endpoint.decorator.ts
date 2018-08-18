@@ -25,7 +25,7 @@ export function Endpoint(options: EndpointOptions) {
     options.name = options.name || key;
 
     const endpoints = getEndpointMetadata(target).concat(options);
-    // console.log('endpoints: ', endpoints);
+    // d('endpoints: ', endpoints);
 
     Reflect.defineMetadata(EndpointMetadata, endpoints, target);
 
@@ -80,7 +80,7 @@ export function Endpoint(options: EndpointOptions) {
 
 export function getEndpointMetadata(instance) {
   const metadata = Reflect.getMetadata(EndpointMetadata, instance);
-  console.log('metadata', metadata);
+  d('metadata', metadata);
   return metadata ? [].concat(metadata) : [];
 }
 
@@ -96,7 +96,7 @@ const STRIP_COMMENTS = /((\/\/.*$)|(\/\*[\s\S]*?\*\/))/gm;
  * function test(arg1, arg2, arg3) { }
  *
  * const args = annotate(fn);
- * console.log(args);
+ * d(args);
  *
  * // ['arg1', 'arg2', 'arg3']
  *
@@ -110,11 +110,11 @@ function annotate(fn: (...args) => any) {
 
   if (typeof fn === 'function') {
     fnText = fn.toString().replace(STRIP_COMMENTS, '');
-    console.log(fnText);
+    d(fnText);
     argDecl = fnText.match(FN_ARGS);
     argDecl[1].split(FN_ARG_SPLIT).forEach(function(arg: any) {
       arg.replace(FN_ARG, function(all: any, underscore: any, name: any) {
-        // console.log(all, underscore);
+        // d(all, underscore);
         $inject.push(name);
       });
     });
