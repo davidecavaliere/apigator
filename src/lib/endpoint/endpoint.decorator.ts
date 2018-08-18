@@ -63,13 +63,32 @@ export function Endpoint(options: EndpointOptions) {
 
         // this will work only for aws lambdas
         // const event = args[0];
-        // const context = args[1];
+        const context = args[1];
         const cb = args[2];
         d('callback is', cb);
         d('-----------------');
         const retValue = originalFunction.apply(instance, newArgs);
 
-        cb(null, retValue, instance);
+        d('retValue', retValue);
+        d('retValue is promise', retValue instanceof Promise);
+        if (retValue instanceof Promise) {
+          d('wait for promise to resolve');
+          retValue.then((res) => {
+            d('promise resolved with', res);
+            cb(context, res, instance);
+          }).catch((err) => {
+            d('promise rejected', err);
+            if (err === 'not found') {
+              context.status(404);
+            } else {
+              context.status(500);
+            }
+            cb(context, err, instance);
+          });
+        } else {
+
+          cb(context, retValue, instance);
+        }
         resolve(retValue);
       });
     };
