@@ -64,6 +64,13 @@ export function Endpoint(options: EndpointOptions) {
         // this will work only for aws lambdas
         // const event = args[0];
         const context = args[1];
+
+        // Make sure to add this so you can re-use `conn` between function calls.
+        // See https://www.mongodb.com/blog/post/serverless-development-with-nodejs-aws-lambda-mongodb-atlas
+        context.callbackWaitsForEmptyEventLoop = false;
+        d('context is', context);
+
+
         const cb = args[2];
         d('callback is', cb);
         d('-----------------');
@@ -75,7 +82,7 @@ export function Endpoint(options: EndpointOptions) {
           d('wait for promise to resolve');
           retValue.then((res) => {
             d('promise resolved with', res);
-            cb(context, res, instance);
+            cb(null, res);
           }).catch((err) => {
             d('promise rejected', err);
             if (err === 'not found') {
@@ -83,11 +90,11 @@ export function Endpoint(options: EndpointOptions) {
             } else {
               context.status(500);
             }
-            cb(context, err, instance);
+            cb(null, err);
           });
         } else {
 
-          cb(context, retValue, instance);
+          cb(null, retValue);
         }
         resolve(retValue);
       });
