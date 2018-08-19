@@ -1,6 +1,6 @@
 import 'reflect-metadata';
 
-const ServiceMetadata = Symbol('Service');
+const ServiceMetadata = 'Service';
 
 export interface ServiceOptions {
   readonly name: string;

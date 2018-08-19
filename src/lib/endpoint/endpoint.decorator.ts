@@ -6,7 +6,7 @@ import { getSingleton } from '../index';
 
 const d = debug('lambda:endpoint');
 
-export const EndpointMetadata = Symbol('Endpoint');
+export const EndpointMetadata = 'Endpoint';
 
 export interface EndpointOptions {
   name?: string;
