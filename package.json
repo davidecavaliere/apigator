@@ -54,10 +54,7 @@
   "dependencies": {
     "@microgamma/ts-debug": "^0.3.1",
     "@types/aws-lambda": "^8.10.11",
-    "lodash": "^4.17.10",
-    "reflect-metadata": "^0.1.12",
-    "rxjs": "^5.5.10",
-    "sha.js": "^2.4.10"
+    "reflect-metadata": "^0.1.12"
   },
   "devDependencies": {
     "ava": "^1.0.0-beta.3",
@@ -79,9 +76,6 @@
     "typedoc": "^0.11.1",
     "typescript": "^2.9.0-dev.20180412",
     "yarn": "^1.5.1"
-  },
-  "peerDependencies": {
-    "reflect-metadata": "^0.1.12"
   },
   "ava": {
     "failFast": true,
