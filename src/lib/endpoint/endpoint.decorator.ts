@@ -3,9 +3,7 @@
 import debug from 'debug';
 import 'reflect-metadata';
 import { getSingleton } from '../index';
-import { Assertions } from 'ava';
-import { Event } from 'typedoc';
-import { APIGatewayEvent } from 'aws-lambda';
+import { APIGatewayEvent } from '@types/aws-lambda';
 
 const d = debug('microgamma:apigator:endpoint');
 
@@ -136,15 +134,13 @@ export function Endpoint(options: EndpointOptions) {
         d('mapped args are', newArgs);
 
 
-
-
         const cb = args[2];
         d('callback is', cb);
         d('-----------------');
         const retValue = originalFunction.apply(instance, newArgs);
 
         d('retValue', retValue);
-        d('retValue is promise', retValue instanceof Promise);
+
         if (retValue instanceof Promise) {
           d('wait for promise to resolve');
           retValue.then((res) => {
@@ -174,7 +170,7 @@ export function Endpoint(options: EndpointOptions) {
             //   }
             // }
 
-            cb(err);
+            cb(new Error(`[500] ${err}`));
           });
 
         } else {
