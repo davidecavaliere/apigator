@@ -57,13 +57,15 @@ test('findAll method should return 2: promised', t => {
   t.plan(1);
   const retValue: Promise<any> = instance.findAll.apply(null, [
     {
-      arg1: 1,
-      arg2: 2,
-      arg3: 3
+      path: {
+        arg1: 1,
+        arg2: 2,
+        arg3: 3
+      }
     },
     { context: 'a' },
     (...args) => {
-      // console.log('running callback', args);
+      console.log('running callback', args);
     }
   ]);
 
