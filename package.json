@@ -53,6 +53,7 @@
   },
   "dependencies": {
     "@microgamma/ts-debug": "^0.3.1",
+    "@types/aws-lambda": "^8.10.11",
     "lodash": "^4.17.10",
     "reflect-metadata": "^0.1.12",
     "rxjs": "^5.5.10",
