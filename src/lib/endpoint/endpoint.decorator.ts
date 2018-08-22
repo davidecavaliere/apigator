@@ -137,49 +137,42 @@ export function Endpoint(options: EndpointOptions) {
         const cb = args[2];
         d('callback is', cb);
         d('-----------------');
-        const retValue = originalFunction.apply(instance, newArgs);
 
-        d('retValue', retValue);
+        try {
+          const retValue = originalFunction.apply(instance, newArgs);
+          d('retValue', retValue);
 
-        if (retValue instanceof Promise) {
-          d('wait for promise to resolve');
-          retValue.then((res) => {
 
-            d('promise resolved with', res);
-            cb(null, res);
+          if (retValue instanceof Promise) {
+            d('wait for promise to resolve');
+            retValue.then((res) => {
 
-          }).catch((err) => {
+              d('promise resolved with', res);
+              cb(null, res);
 
-            d('promise rejected', err);
+            }).catch((err) => {
 
-            // if (err === 'not found') {
-            //
-            //   if (typeof context.status === 'function') {
-            //     // context is expressjs res object
-            //     context.status(404);
-            //   } else if (context.hasOwnProperty('statusCode')) {
-            //     // this is a aws lambda
-            //     context.statusCode = 404;
-            //   }
-            // } else {
-            //   // same as above
-            //   if (typeof context.status === 'function') {
-            //     context.status(500);
-            //   } else if (context.hasOwnProperty('statusCode')) {
-            //     context.statusCode = 500;
-            //   }
-            // }
+              d('promise rejected', err);
 
-            cb(new Error(`[500] ${err}`));
-          });
+              /*
+               * this works only when used with serverless and integration: 'lambda' is set
+               */
+              cb(new Error(err));
+            });
 
-        } else {
+          } else {
 
-          cb(null, retValue);
+            cb(null, retValue);
 
+          }
+
+          resolve(retValue);
+
+        } catch (e) {
+          cb(new Error(`[500] ${e}`));
         }
 
-        resolve(retValue);
+
       });
     };
 
@@ -194,7 +187,6 @@ export function getEndpointMetadata(instance) {
 }
 
 export type FunctionArg = string;
-
 
 /**
  * Returns an array of arguments' name of the given function
@@ -226,8 +218,8 @@ function extractArguments(fn: (...args) => any): FunctionArg[] {
     fnText = fn.toString().replace(STRIP_COMMENTS, '');
     d(fnText);
     argDecl = fnText.match(FN_ARGS);
-    argDecl[1].split(FN_ARG_SPLIT).forEach(function(arg: any) {
-      arg.replace(FN_ARG, function(all: any, underscore: any, name: any) {
+    argDecl[1].split(FN_ARG_SPLIT).forEach(function (arg: any) {
+      arg.replace(FN_ARG, function (all: any, underscore: any, name: any) {
         // d(all, underscore);
         $inject.push(name);
       });
@@ -237,39 +229,4 @@ function extractArguments(fn: (...args) => any): FunctionArg[] {
   }
 
   return $inject;
-}
-
-/**
- *
- * @param event AWS event. I want to be a more generic type
- */
-function mapArguments(event, body: string, pathParams: string) {
-
-  // originalArgs.map(arg => {
-  //   d('parsing', arg);
-  //
-  //
-  //   // args[0] is the event when running on aws lambda
-  //   const event = args[0];
-  //
-  //   if (methodMetadata['method'] === 'get') {
-  //
-  //     if (!event.path && !event.path[arg]) {
-  //       reject(`argument <${arg}> not found `);
-  //     }
-  //
-  //   } else {
-  //
-  //     if (!event[arg]) {
-  //       reject(`argument <${arg}> not found `);
-  //     }
-  //
-  //   }
-  //
-  //   // if arg shall be found as a path parameter on aws lambda we'll need
-  //   // to check the event.path[arg]
-  //
-  //   // with the following we'll get the arg from the body if any
-  //   return args[0][arg];
-  // });
 }
