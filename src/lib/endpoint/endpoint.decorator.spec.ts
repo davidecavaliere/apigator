@@ -1,47 +1,27 @@
 // tslint:disable:no-expression-statement no-object-mutation
 import test from 'ava';
-import {
-  Endpoint,
-  EndpointOptions,
-  getEndpointMetadata
-} from './endpoint.decorator';
-import { Service } from '../../';
-import { boostrap } from '../index';
+import { Endpoint, EndpointOptions, getEndpointMetadata } from './endpoint.decorator';
+import { Log, setNamespace } from '@microgamma/ts-debug/build/main/lib/log.decorator';
 
-const option1: EndpointOptions = {
-  method: 'get',
-  name: 'endpoint-name-1',
-  path: '/'
+const options: EndpointOptions = {
+  name: 'endpoint-name'
 };
 
-const option2: EndpointOptions = {
-  method: 'get',
-  name: 'endpoint-name-2',
-  path: ':id'
-};
+setNamespace('lambda');
 
-@Service({
-  name: 'service'
-})
+@Endpoint(options)
 class TestClass {
-  public readonly toTestAccessToInstance: string = 'base';
+  @Log() public $l;
 
-  @Endpoint(option1)
-  public findAll(arg1, arg2, arg3) {
-    // console.log('running original findAll()');
-    return this.toTestAccessToInstance + arg1 + arg2 + arg3;
-  }
-
-  @Endpoint(option2)
-  public findOne() {
-    return 1;
+  constructor() {
+    this.$l.d('instantiating', this.constructor.name);
   }
 }
 
 let instance: TestClass;
 
 test.beforeEach(() => {
-  instance = boostrap(TestClass, 'express');
+  instance = new TestClass();
 });
 
 test('endpoint decorator', t => {
@@ -50,27 +30,5 @@ test('endpoint decorator', t => {
 });
 
 test('should store some metadata', t => {
-  t.deepEqual(getEndpointMetadata(instance), [option1, option2]);
-});
-
-test('findAll method should return 2: promised', t => {
-  t.plan(1);
-  const retValue: Promise<any> = instance.findAll.apply(null, [
-    {
-      path: {
-        arg1: 1,
-        arg2: 2,
-        arg3: 3
-      }
-    },
-    { context: 'a' },
-    (...args) => {
-      console.log('running callback', args);
-    }
-  ]);
-
-  return retValue.then(value => {
-    // console.log(value);
-    t.is(value, 'base123');
-  });
+  t.is(getEndpointMetadata(instance), options);
 });

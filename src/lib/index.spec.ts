@@ -1,14 +1,14 @@
 // tslint:disable:no-expression-statement no-object-mutation
 import test from 'ava';
-import { boostrap, bootstrapExpress } from './index';
-import { Service } from './services/service.decorator';
+import { bootstrapExpress } from './index';
 import { Endpoint } from './endpoint/endpoint.decorator';
+import { Lambda } from './lambda/lambda.decorator';
 
-@Service({
+@Endpoint({
   name: 'test-service'
 })
 class TestClass {
-  @Endpoint({
+  @Lambda({
     method: 'get',
     name: 'manifest',
     path: '/'
