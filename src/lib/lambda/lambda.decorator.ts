@@ -21,13 +21,8 @@ export interface LambdaOptions {
 }
 
 function getApiGatewayEvent(args): APIGatewayEvent {
-  const awsLambdaEvent: APIGatewayEvent = args[0];
-
-  if (!awsLambdaEvent) {
-    throw new Error('extracting path params');
-  }
-
-  return awsLambdaEvent
+  // TODO add check
+  return args[0];
 }
 
 function extractBody(args: any[]) {
@@ -59,7 +54,112 @@ export function Lambda(options: LambdaOptions) {
 
 
     // real framework that is being used to ran the function
-    descriptor.value = (...args: any[]) => {
+    descriptor.value = async (...args: any[]) => {
+      const functionArgumentsNames = extractArguments(originalFunction);
+      // here we have an array of string with names of arguments.
+      /*
+        i.e.: if function is defined such as:
+
+        public function(id) {
+        }
+
+        then here we have ['id']
+
+       */
+      d('functionArgumentsNames ', functionArgumentsNames);
+
+
+      /*
+      here we have the real args the function has been called with
+      i.e.: in case of aws lambda; respectively event, context, cb
+
+      [
+        { id: '5b798b78a56340b78834026f' },
+        { awsRequestId: 'id',
+          invokeid: 'id',
+          logGroupName: '/aws/lambda/microgamma-user-service--findById',
+          logStreamName: '2015/09/22/[HEAD]13370a84ca4ed8b77c427af260',
+          functionVersion: 'HEAD',
+          isDefaultFunctionVersion: true,
+          functionName: 'microgamma-user-service--findById',
+          memoryLimitInMB: '1024',
+          succeed: [Function: succeed],
+          fail: [Function: fail],
+          done: [Function: done],
+          getRemainingTimeInMillis: [Function: getRemainingTimeInMillis] },
+        [Function: callback] ]
+
+       */
+      d('actual args are: ', args);
+
+      const instance = getSingleton(target.constructor.name);
+      d('current instance is:', instance);
+
+      const methodMetadata = getLambdaMetadata(instance);
+      d('method metadata', methodMetadata);
+
+
+      /*
+          At this point args is an array
+          I.E.:
+           - if running on AWS lambda would be [event, context, cb]
+          and so on
+       */
+
+      // extract body
+      const body = extractBody(args);
+      d('body is', body);
+
+      // extract path params
+      const pathParams = extractPathParams(args);
+      d('path params are', pathParams);
+
+      // extract query params
+      // TBD
+
+      // being able to alter the context
+      // TBD
+
+      // Make sure to add this so you can re-use `conn` between function calls.
+      // See https://www.mongodb.com/blog/post/serverless-development-with-nodejs-aws-lambda-mongodb-atlas
+      args[1].callbackWaitsForEmptyEventLoop = false;
+
+
+      // here we need to extract the values we're expecting as arguments of our function from the real argument passed.
+      const newArgs = functionArgumentsNames.map((arg) => {
+        d('arg is', arg);
+        return pathParams[arg] || body[arg] || `argument ${arg} not found`;
+      });
+      d('mapped args are', newArgs);
+
+
+      const cb = args[2];
+      d('callback is', cb);
+      d('-----------------');
+
+
+      try {
+        const retValue = await originalFunction.apply(instance, newArgs);
+        d('retValue', retValue);
+
+        // return retValue;
+
+
+        // } else {
+        //
+        //   cb(null, retValue);
+        //
+        // }
+        //
+        // resolve(retValue);
+
+        cb(null, retValue);
+
+        return retValue;
+      } catch (e) {
+        cb(new Error(`[500] ${e}`));
+      }
+
 
       // const awsContext: APIGatewayEventRequestContext = args[1];
 
@@ -74,124 +174,7 @@ export function Lambda(options: LambdaOptions) {
       //   return err;
       // }
 
-      return new Promise((resolve, reject) => {
-        const functionArgumentsNames = extractArguments(originalFunction);
-        // here we have an array of string with names of arguments.
-        /*
-          i.e.: if function is defined such as:
-
-          public function(id) {
-          }
-
-          then here we have ['id']
-
-         */
-        d('functionArgumentsNames ', functionArgumentsNames);
-
-        /*
-        here we have the real args the function has been called with
-        i.e.: in case of aws lambda; respectively event, context, cb
-
-        [
-          { id: '5b798b78a56340b78834026f' },
-          { awsRequestId: 'id',
-            invokeid: 'id',
-            logGroupName: '/aws/lambda/microgamma-user-service--findById',
-            logStreamName: '2015/09/22/[HEAD]13370a84ca4ed8b77c427af260',
-            functionVersion: 'HEAD',
-            isDefaultFunctionVersion: true,
-            functionName: 'microgamma-user-service--findById',
-            memoryLimitInMB: '1024',
-            succeed: [Function: succeed],
-            fail: [Function: fail],
-            done: [Function: done],
-            getRemainingTimeInMillis: [Function: getRemainingTimeInMillis] },
-          [Function: callback] ]
-
-         */
-        d('actual args are: ', args);
-
-        const instance = getSingleton(target.constructor.name);
-        d('current instance is:', instance);
-
-        const methodMetadata = getLambdaMetadata(instance);
-        d('method metadata', methodMetadata);
-
-
-        /*
-            At this point args is an array
-            I.E.:
-             - if running on AWS lambda would be [event, context, cb]
-            and so on
-         */
-
-        // extract body
-        const body = extractBody(args);
-        d('body is', body);
-
-        // extract path params
-        const pathParams = extractPathParams(args);
-        d('path params are', pathParams);
-
-        // extract query params
-        // TBD
-
-        // being able to alter the context
-        // TBD
-
-        // Make sure to add this so you can re-use `conn` between function calls.
-        // See https://www.mongodb.com/blog/post/serverless-development-with-nodejs-aws-lambda-mongodb-atlas
-        args[1].callbackWaitsForEmptyEventLoop = false;
-
-
-        // here we need to extract the values we're expecting as arguments of our function from the real argument passed.
-        const newArgs = functionArgumentsNames.map((arg) => {
-          d('arg is', arg);
-          return pathParams[arg] || body[arg] || `argument ${arg} not found`;
-        });
-        d('mapped args are', newArgs);
-
-
-        const cb = args[2];
-        d('callback is', cb);
-        d('-----------------');
-
-        try {
-          const retValue = originalFunction.apply(instance, newArgs);
-          d('retValue', retValue);
-
-
-          if (retValue instanceof Promise) {
-            d('wait for promise to resolve');
-            retValue.then((res) => {
-
-              d('promise resolved with', res);
-              cb(null, res);
-
-            }).catch((err) => {
-
-              d('promise rejected', err);
-
-              /*
-               * this works only when used with serverless and integration: 'lambda' is set
-               */
-              cb(new Error(err));
-            });
-
-          } else {
-
-            cb(null, retValue);
-
-          }
-
-          resolve(retValue);
-
-        } catch (e) {
-          cb(new Error(`[500] ${e}`));
-        }
-
-
-      });
+      // return new Promise((resolve, reject) => );
     };
 
     return descriptor;

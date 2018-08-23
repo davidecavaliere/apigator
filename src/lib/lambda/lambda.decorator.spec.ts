@@ -53,23 +53,40 @@ test('should store some metadata', t => {
 });
 
 test('findAll method should return 2: promised', t => {
-  t.plan(1);
-  const retValue: Promise<any> = instance.findAll.apply(null, [
-    {
+  t.plan(2);
+
+  return instance.findAll.apply(null, [
+    { // aws event
       path: {
         arg1: 1,
         arg2: 2,
         arg3: 3
       }
     },
-    { context: 'a' },
-    (...args) => {
-      console.log('running callback', args);
+    { context: 'a' }, // context
+    (...args) => { // callback
+      t.is(args[1], 'base123');
     }
-  ]);
-
-  return retValue.then(value => {
-    // console.log(value);
+  ]).then((value) => {
     t.is(value, 'base123');
   });
+
+  // const retValue: Promise<any> = instance.findAll.apply(null, [
+  //   {
+  //     path: {
+  //       arg1: 1,
+  //       arg2: 2,
+  //       arg3: 3
+  //     }
+  //   },
+  //   { context: 'a' },
+  //   (...args) => {
+  //     console.log('running callback', args);
+  //   }
+  // ]);
+  //
+  // return retValue.then(value => {
+  //   // console.log(value);
+  //   t.is(value, 'base123');
+  // });
 });
