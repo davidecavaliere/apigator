@@ -142,17 +142,6 @@ export function Lambda(options: LambdaOptions) {
         const retValue = await originalFunction.apply(instance, newArgs);
         d('retValue', retValue);
 
-        // return retValue;
-
-
-        // } else {
-        //
-        //   cb(null, retValue);
-        //
-        // }
-        //
-        // resolve(retValue);
-
         cb(null, retValue);
 
         return retValue;
@@ -160,21 +149,6 @@ export function Lambda(options: LambdaOptions) {
         cb(new Error(`[500] ${e}`));
       }
 
-
-      // const awsContext: APIGatewayEventRequestContext = args[1];
-
-      // function parseError(err: {}) {
-      //   if ('identity' in awsContext) {
-      //     // this is an aws context
-      //     // TODO check error type
-      //     awsContext.statusCode = 500;
-      //     return
-      //   }
-      //
-      //   return err;
-      // }
-
-      // return new Promise((resolve, reject) => );
     };
 
     return descriptor;
