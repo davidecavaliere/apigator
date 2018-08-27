@@ -15,7 +15,7 @@ Ideas:
   - path and query parameters are automatically injected into the lambda
   - support for parameters validation
 
-For an glimpse of how it works look at the code into the example folder 
+
 
 
 

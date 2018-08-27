@@ -53,7 +53,7 @@ test('should store some metadata', t => {
 });
 
 test('findAll method should return 2: promised', t => {
-  t.plan(2);
+  t.plan(1);
 
   return instance.findAll.apply(null, [
     { // aws event
