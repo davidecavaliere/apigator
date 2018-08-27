@@ -63,30 +63,10 @@ test('findAll method should return 2: promised', t => {
         arg3: 3
       }
     },
-    { context: 'a' }, // context
-    (...args) => { // callback
-      t.is(args[1], 'base123');
-    }
+    { context: 'a' } // context
   ]).then((value) => {
     t.is(value, 'base123');
   });
 
-  // const retValue: Promise<any> = instance.findAll.apply(null, [
-  //   {
-  //     path: {
-  //       arg1: 1,
-  //       arg2: 2,
-  //       arg3: 3
-  //     }
-  //   },
-  //   { context: 'a' },
-  //   (...args) => {
-  //     console.log('running callback', args);
-  //   }
-  // ]);
-  //
-  // return retValue.then(value => {
-  //   // console.log(value);
-  //   t.is(value, 'base123');
-  // });
+
 });

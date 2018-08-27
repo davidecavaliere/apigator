@@ -140,14 +140,21 @@ export function Lambda(options: LambdaOptions) {
 
       try {
         const retValue = await originalFunction.apply(instance, newArgs);
-        d('retValue', retValue);
 
-        cb(null, retValue);
+        d('retValue', retValue);
 
         return retValue;
       } catch (e) {
-        cb(new Error(`[500] ${e}`));
+
+        d('something is going on', e);
+
+        if (e.message.match(/^\[[0-9]{3,}\](.)+/)) {
+          throw Error(e);
+        }
+
+        throw Error(`[500] ${e}`);
       }
+
 
     };
 
