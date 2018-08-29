@@ -126,6 +126,10 @@ export function Lambda(options: LambdaOptions) {
       // here we need to extract the values we're expecting as arguments of our function from the real argument passed.
       const newArgs = functionArgumentsNames.map((arg) => {
         d('arg is', arg);
+        if (arg === 'body') {
+          return body;
+        }
+
         return pathParams[arg] || body[arg] || `argument ${arg} not found`;
       });
       d('mapped args are', newArgs);
