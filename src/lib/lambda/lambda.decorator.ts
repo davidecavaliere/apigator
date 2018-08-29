@@ -14,10 +14,8 @@ export interface LambdaOptions {
   path: string;
   method: string;
   integration?: string; // TODO Enum with all possible values of serverless integration;
-  // properties to merge into the context object of  aws lambda context
-  context?: {
-    [prop: string]: any
-  };
+  private?: boolean;
+  cors?: boolean;
 }
 
 function getApiGatewayEvent(args): APIGatewayEvent {
