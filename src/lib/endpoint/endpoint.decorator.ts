@@ -5,6 +5,8 @@ const EndpointMetadata = 'Endpoint';
 export interface EndpointOptions {
   readonly name: string;
   readonly basePath?: string;
+  readonly private?: boolean;
+  readonly cors?: boolean;
 }
 
 export function Endpoint(options: EndpointOptions): ClassDecorator {
