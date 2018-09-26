@@ -13,10 +13,7 @@ const option1: LambdaOptions = {
 const option2: LambdaOptions = {
   method: 'get',
   name: 'lambda-name-2',
-  path: ':id',
-  context: {
-    callbackWaitsForEmptyEventLoop: true
-  }
+  path: ':id'
 };
 
 @Endpoint({
