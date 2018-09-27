@@ -33,6 +33,10 @@ function extractPathParams(args: any[]) {
   return getApiGatewayEvent(args).path;
 }
 
+function extractHeaderParams(args: any[]) {
+  return getApiGatewayEvent(args).headers;
+}
+
 export function Lambda(options: LambdaOptions) {
   d('constructing a class decorator', options);
   return (target: any, key: string, descriptor) => {
@@ -113,6 +117,9 @@ export function Lambda(options: LambdaOptions) {
       const pathParams = extractPathParams(args);
       d('path params are', pathParams);
 
+      const headerParams = extractHeaderParams(args);
+      d('header params are', headerParams);
+
       // extract query params
       // TBD
 
@@ -131,7 +138,7 @@ export function Lambda(options: LambdaOptions) {
           return body;
         }
 
-        return pathParams[arg] || body[arg] || `argument ${arg} not found`;
+        return pathParams[arg] || body[arg] || headerParams[arg] || `argument ${arg} not found`;
       });
       d('mapped args are', newArgs);
 
