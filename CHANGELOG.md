@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="1.8.0"></a>
+# [1.8.0](https://github.com/davidecavaliere/apigator/compare/v1.7.0...v1.8.0) (2018-09-27)
+
+
+### Features
+
+* enable header params extraction ([041ca64](https://github.com/davidecavaliere/apigator/commit/041ca64))
+
+
+
 <a name="1.7.0"></a>
 # [1.7.0](https://github.com/davidecavaliere/apigator/compare/v1.6.11...v1.7.0) (2018-09-26)
 
