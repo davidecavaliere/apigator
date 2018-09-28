@@ -12,8 +12,8 @@ export const LambdaMetadata = 'Lambda';
 
 export interface LambdaOptions {
   name?: string;
-  path: string;
-  method: string;
+  path?: string;
+  method?: string;
   integration?: string; // TODO Enum with all possible values of serverless integration;
   private?: boolean;
   cors?: boolean;
