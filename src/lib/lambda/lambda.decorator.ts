@@ -8,7 +8,7 @@ import { extractArguments } from '../utils';
 
 const d = debug('microgamma:apigator:lambda');
 
-export const LambdaMetadata = 'Lambda';
+export const LambdaMetadata = Symbol('Lambda');
 
 export interface LambdaOptions {
   name?: string;

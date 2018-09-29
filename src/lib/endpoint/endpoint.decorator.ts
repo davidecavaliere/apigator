@@ -1,6 +1,6 @@
 import 'reflect-metadata';
 
-const EndpointMetadata = 'Endpoint';
+const EndpointMetadata = Symbol('Endpoint');
 
 export interface EndpointOptions {
   readonly name: string;
