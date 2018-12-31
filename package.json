@@ -1,6 +1,6 @@
 {
   "name": "@microgamma/apigator",
-  "version": "1.9.3",
+  "version": "1.9.5",
   "description": "run your api code everywhere",
   "main": "build/main/index.js",
   "typings": "build/main/index.d.ts",
