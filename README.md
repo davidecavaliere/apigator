@@ -1,4 +1,4 @@
-# Apigator ![Build Status](https://codebuild.eu-west-2.amazonaws.com/badges?uuid=eyJlbmNyeXB0ZWREYXRhIjoiNG4wQldXY0xrQTk0WTZHQTNYS2QyekJiTmxyaHppUFh3eXl0aXBlZ093aVlLRFV1SHhzWFJ0eDJvdkJqbjJrVEwxRHR1am85Y3hjeE9rRG1DZFNmYlJzPSIsIml2UGFyYW1ldGVyU3BlYyI6Im5Xa3ArMklvM0UzZXdKMzAiLCJtYXRlcmlhbFNldFNlcmlhbCI6MX0%3D&branch=master) 
+# Apigator [![Build Status](https://travis-ci.org/davidecavaliere/apigator.svg?branch=master)](https://travis-ci.org/davidecavaliere/apigator) [![codecov](https://codecov.io/gh/davidecavaliere/apigator/branch/master/graph/badge.svg)](https://codecov.io/gh/davidecavaliere/apigator)
 
 This project is mean to make more elegant api endpoint using typescript classes and decorators.
 
