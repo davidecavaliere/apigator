@@ -4,10 +4,12 @@ node_js:
 script:
   - yarn test
   - yarn build
+  - npm publish
 #- yarn sls deploy --stage dev
-#after_script:
-#  - 'cat coverage/lcov.info | ./node_modules/.bin/coveralls' # sends the coverage report to coveralls
-deploy:
+after_script:
+#  - 'cat coverage/lcov.info | npx coveralls' # sends the coverage report to coveralls
+  - yarn cov:send
+#deploy:
 #  provider: npm
 #  email: cavaliere.davide@gmail.com
 #  api_key: $NPM_TOKEN
