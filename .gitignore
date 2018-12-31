@@ -4,7 +4,6 @@ test
 src/**.js
 
 .idea/
-yarn.lock
 
 coverage
 .nyc_output
@@ -12,4 +11,3 @@ coverage
 
 package-lock.json
 
-example/lib/
