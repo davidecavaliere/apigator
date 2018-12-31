@@ -2,7 +2,7 @@
 import test from 'ava';
 import { getLambdaMetadata, Lambda, LambdaOptions } from './lambda.decorator';
 import { Endpoint } from '../../';
-import { boostrap } from '../index';
+import { bootstrap } from '../index';
 
 const option1: LambdaOptions = {
   method: 'get',
@@ -37,7 +37,7 @@ class TestClass {
 let instance: TestClass;
 
 test.beforeEach(() => {
-  instance = boostrap(TestClass, 'express');
+  instance = bootstrap(TestClass);
 });
 
 test('lambda decorator', t => {

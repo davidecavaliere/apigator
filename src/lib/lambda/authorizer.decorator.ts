@@ -3,7 +3,7 @@
 import debug from 'debug';
 import 'reflect-metadata';
 import { getSingleton } from '../index';
-import { CustomAuthorizerEvent, CustomAuthorizerResult } from 'aws-lambda';
+import { AuthResponseContext, CustomAuthorizerEvent, CustomAuthorizerResult } from 'aws-lambda';
 
 const d = debug('microgamma:apigator:authorizer');
 
@@ -33,27 +33,36 @@ export function Authorizer(options?: AuthorizerOptions) {
 
     descriptor.value = async (...args: any[]) => {
       try {
+        d('original args are', args);
 
-        const authContext: CustomAuthorizerEvent = args[0];
-        d('authContext is', authContext);
-        const newArgs = [authContext.authorizationToken, authContext.methodArn];
+        const event: CustomAuthorizerEvent = args[0] as CustomAuthorizerEvent;
+
+        d('authContext is', event);
+        const newArgs = [event.authorizationToken, event.methodArn];
 
         const retValue = await originalFunction.apply(instance, newArgs);
 
-        d('retValue', retValue);
+        // authContext.requestContext.identity.user = retValue;
+
+        // context.indentity = retValue;
+        // d('setting identity', context.indentity);
 
         return {
-          principalId: authContext.authorizationToken,
+          principalId: event.authorizationToken,
           policyDocument: {
             Version: '2012-10-17',
             Statement: [
               {
                 Action: 'execute-api:Invoke',
-                Effect: retValue ? 'Allow' : 'Deny',
-                Resource: authContext.methodArn,
+                Effect: !!retValue ? 'Allow' : 'Deny',
+                Resource: event.methodArn,
               },
             ],
+          },
+          context: {
+            user: retValue
           }
+
         } as CustomAuthorizerResult;
 
       } catch (e) {

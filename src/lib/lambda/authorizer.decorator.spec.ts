@@ -2,7 +2,7 @@
 import test from 'ava';
 import { Lambda, LambdaOptions } from './lambda.decorator';
 import { Endpoint } from '../../';
-import { boostrap } from '../index';
+import { bootstrap } from '../index';
 import { Authorizer, getAuthorizerMetadata } from './authorizer.decorator';
 
 const option1: LambdaOptions = {
@@ -45,7 +45,7 @@ class TestClass {
 let instance: TestClass;
 
 test.beforeEach(() => {
-  instance = boostrap(TestClass, 'express');
+  instance = bootstrap(TestClass);
 });
 
 test('authorize function', (t) => {
@@ -70,7 +70,11 @@ test('authorize function', (t) => {
             Effect: 'Allow',
             Resource: 'some-method-arn',
           },
+
         ],
+      },
+      context: {
+        user: true
       }
     });
   });

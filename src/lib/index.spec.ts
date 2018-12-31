@@ -1,8 +1,8 @@
 // tslint:disable:no-expression-statement no-object-mutation
 import test from 'ava';
-import { bootstrapExpress } from './index';
 import { Endpoint } from './endpoint/endpoint.decorator';
 import { Lambda } from './lambda/lambda.decorator';
+import { bootstrap } from './index';
 
 @Endpoint({
   name: 'test-service'
@@ -18,13 +18,13 @@ class TestClass {
   }
 }
 
-test.only('bootstrapExpress', t => {
-  const app = {
-    get: (...args) => {
-      // console.log('setting args', args);
-    }
-  };
-  const inst = bootstrapExpress(TestClass, app);
+let inst;
+
+test.beforeEach(() => {
+  inst = bootstrap(TestClass);
+});
+
+test('bootstrapExpress', t => {
 
   t.is(inst instanceof TestClass, true);
 });

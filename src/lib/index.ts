@@ -6,7 +6,7 @@ const d = getDebugger('microgamma:apigator:index');
 
 const singletons = {};
 
-export function boostrap(classDef: any, engine: string) {
+export function bootstrap(classDef: any) {
   const inst = new classDef();
 
   d('storing singleton', classDef.name);
@@ -15,15 +15,12 @@ export function boostrap(classDef: any, engine: string) {
   return inst;
 }
 
-export function bootstrapExpress(classDef: any, app: any) {
-  const inst = new classDef();
-
-  singletons[classDef.name] = inst;
-
-  return inst;
-}
 
 export function getSingleton(className: string) {
   d(`getting singleton ${className}`);
   return singletons[className] || null;
+}
+
+export abstract class Service {
+
 }

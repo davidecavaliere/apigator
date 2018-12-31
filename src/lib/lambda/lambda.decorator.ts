@@ -54,8 +54,6 @@ export function Lambda(options: LambdaOptions) {
     Reflect.defineMetadata(LambdaMetadata, lambdas, target);
 
     const originalFunction = descriptor.value;
-    d('original function is', originalFunction);
-
 
     // real framework that is being used to ran the function
     descriptor.value = async (...args: any[]) => {
@@ -142,11 +140,6 @@ export function Lambda(options: LambdaOptions) {
         return pathParams[arg] || body[arg] || headerParams[arg] || `argument ${arg} not found`;
       });
       d('mapped args are', newArgs);
-
-
-      const cb = args[2];
-      d('callback is', cb);
-      d('-----------------');
 
 
       try {
