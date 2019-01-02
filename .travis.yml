@@ -10,8 +10,9 @@ after_script:
 deploy:
   provider: npm
   email: cavaliere.davide@gmail.com
-  api_key: $NPM_TOKEN
+  api_key: ${NPM_TOKEN}
   on:
     tags: true
+    all_branches: true
   tag: next
   skip_cleanup: true
