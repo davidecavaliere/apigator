@@ -20,7 +20,3 @@ export function getSingleton(className: string) {
   d(`getting singleton ${className}`);
   return singletons[className] || null;
 }
-
-export function serve(classDef) {
-
-}
