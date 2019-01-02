@@ -4,6 +4,7 @@ import debug from 'debug';
 import 'reflect-metadata';
 import { getSingleton } from '../index';
 import { AuthResponseContext, CustomAuthorizerEvent, CustomAuthorizerResult } from 'aws-lambda';
+import { getInjectable } from '../di';
 
 const d = debug('microgamma:apigator:authorizer');
 
@@ -25,14 +26,15 @@ export function Authorizer(options?: AuthorizerOptions) {
       name: options ? options.name : key
     }, target);
 
-    const instance = getSingleton(target.constructor.name);
-    d('current instance is:', instance);
-
     const originalFunction = descriptor.value;
-    d('original function is', originalFunction);
+    d('original function is', originalFunction.name);
 
     descriptor.value = async (...args: any[]) => {
       try {
+        d('getting singleton for ', target.constructor.name);
+        const instance = getSingleton(target.constructor.name);
+        d('current instance is:', instance);
+
         d('original args are', args);
 
         const event: CustomAuthorizerEvent = args[0] as CustomAuthorizerEvent;
@@ -47,8 +49,8 @@ export function Authorizer(options?: AuthorizerOptions) {
         // context.indentity = retValue;
         // d('setting identity', context.indentity);
 
-        return {
-          principalId: event.authorizationToken,
+        const policy = {
+          principalId: retValue,
           policyDocument: {
             Version: '2012-10-17',
             Statement: [
@@ -65,6 +67,9 @@ export function Authorizer(options?: AuthorizerOptions) {
 
         } as CustomAuthorizerResult;
 
+        d('returning policy', policy);
+
+        return policy;
       } catch (e) {
 
         d('something is going on', e);

@@ -20,7 +20,7 @@ export function Inject(classDef): PropertyDecorator {
     d('got constructor', constructor.name);
 
     if (!singletons[constructor.name]) {
-      d('singleton not found. creating....');
+      d( `${constructor.name} singleton not found. creating....`);
       singletons[constructor.name] = new constructor();
     }
 

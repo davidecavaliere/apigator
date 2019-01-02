@@ -137,7 +137,15 @@ export function Lambda(options: LambdaOptions) {
           return body;
         }
 
-        return pathParams[arg] || body[arg] || headerParams[arg] || `argument ${arg} not found`;
+        if (arg === 'context') {
+          return args[1];
+        }
+
+        if (arg === 'event') {
+          return args[0];
+        }
+
+        return pathParams[arg] || body[arg] || headerParams[arg] || args[0][arg] || `argument ${arg} not found`;
       });
       d('mapped args are', newArgs);
 
@@ -168,6 +176,6 @@ export function Lambda(options: LambdaOptions) {
 
 export function getLambdaMetadata(instance) {
   const metadata = Reflect.getMetadata(LambdaMetadata, instance);
-  d('metadata', metadata);
+  d('lambda metadata', metadata);
   return metadata ? [].concat(metadata) : [];
 }

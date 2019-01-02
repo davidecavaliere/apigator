@@ -59,9 +59,7 @@ test('authorize function', (t) => {
   }]).then((value) => {
     t.deepEqual(value, {
 
-      principalId: {
-        scope: ['some-method-arn']
-      },
+      principalId: true,
       policyDocument: {
         Version: '2012-10-17',
         Statement: [

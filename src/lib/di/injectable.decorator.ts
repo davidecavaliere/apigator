@@ -24,7 +24,7 @@ export interface InjectableOptions {
 export function Injectable(options?: InjectableOptions) {
   // console.log('constructing a class decorator', options)
   return <TFunction extends Constructor>(target: TFunction) => {
-    d('adding class', target.name);
+    d('injecting class', target.name);
 
     injectables[target.name] = target;
     Reflect.metadata(InjectableMetadata, options)(target);

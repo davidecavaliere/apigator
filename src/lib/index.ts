@@ -21,6 +21,6 @@ export function getSingleton(className: string) {
   return singletons[className] || null;
 }
 
-export abstract class Service {
+export function serve(classDef) {
 
 }
