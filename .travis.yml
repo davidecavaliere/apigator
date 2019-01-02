@@ -14,5 +14,4 @@ deploy:
   on:
     tags: true
     all_branches: true
-  tag: next
   skip_cleanup: true
