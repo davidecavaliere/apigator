@@ -179,3 +179,9 @@ export function getLambdaMetadata(instance) {
   d('lambda metadata', metadata);
   return metadata ? [].concat(metadata) : [];
 }
+
+export function getLambdaMetadataFromClass(klass) {
+  const metadata = Reflect.getMetadata(LambdaMetadata, klass.prototype);
+  d('lambda metadata', metadata);
+  return metadata ? [].concat(metadata) : [];
+}

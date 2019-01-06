@@ -1,6 +1,6 @@
 // tslint:disable:no-expression-statement no-object-mutation
 import test from 'ava';
-import { Endpoint, EndpointOptions, getEndpointMetadata } from './endpoint.decorator';
+import { Endpoint, EndpointOptions, getEndpointMetadata, getEndpointMetadataFromClass } from './endpoint.decorator';
 
 const options: EndpointOptions = {
   name: 'endpoint-name'
@@ -24,4 +24,10 @@ test('endpoint decorator', t => {
 
 test('should store some metadata', t => {
   t.is(getEndpointMetadata(instance), options);
+});
+
+test('should get metadata from Class', (t) => {
+  const metadata = getEndpointMetadataFromClass(TestClass);
+
+  t.is(metadata, options);
 });

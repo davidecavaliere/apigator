@@ -92,3 +92,10 @@ export function getAuthorizerMetadata(instance): AuthorizerOptions {
   d('metadata', metadata);
   return metadata;
 }
+
+export function getAuthorizerMetadataFromClass(klass): AuthorizerOptions {
+  d('metadata keys', Reflect.getMetadataKeys(klass.prototype));
+  const metadata = Reflect.getMetadata(AuthorizerMetadata, klass.prototype);
+  d('metadata', metadata);
+  return metadata;
+}

@@ -1,7 +1,7 @@
 // tslint:disable:no-expression-statement no-object-mutation
 import test from 'ava';
 import { Lambda, LambdaOptions } from './lambda.decorator';
-import { Endpoint } from '../../';
+import { Endpoint, getAuthorizerMetadataFromClass } from '../../';
 import { bootstrap } from '../index';
 import { Authorizer, getAuthorizerMetadata } from './authorizer.decorator';
 
@@ -46,6 +46,10 @@ let instance: TestClass;
 
 test.beforeEach(() => {
   instance = bootstrap(TestClass);
+});
+
+test('should get metadata from class', (t) => {
+  t.deepEqual(getAuthorizerMetadataFromClass(TestClass), {name: 'authorize'});
 });
 
 test('authorize function', (t) => {

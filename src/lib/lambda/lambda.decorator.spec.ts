@@ -1,7 +1,7 @@
 // tslint:disable:no-expression-statement no-object-mutation
 import test from 'ava';
-import { getLambdaMetadata, Lambda, LambdaOptions } from './lambda.decorator';
-import { Endpoint } from '../../';
+import { getLambdaMetadata, getLambdaMetadataFromClass, Lambda, LambdaOptions } from './lambda.decorator';
+import { Endpoint, getEndpointMetadataFromClass } from '../../';
 import { bootstrap } from '../index';
 
 const option1: LambdaOptions = {
@@ -47,6 +47,10 @@ test('lambda decorator', t => {
 
 test('should store some metadata', t => {
   t.deepEqual(getLambdaMetadata(instance), [option1, option2]);
+});
+
+test('should get metadata from class', (t) => {
+  t.deepEqual(getLambdaMetadataFromClass(TestClass), [option1, option2]);
 });
 
 test('findAll method should return 2: promised', t => {

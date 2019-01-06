@@ -21,3 +21,8 @@ export function Endpoint(options: EndpointOptions): ClassDecorator {
 export function getEndpointMetadata(instance) {
   return Reflect.getMetadata(EndpointMetadata, instance.constructor);
 }
+
+export function getEndpointMetadataFromClass(klass) {
+  return Reflect.getMetadata(EndpointMetadata, klass);
+}
+
