@@ -101,6 +101,11 @@ export function Lambda(options: LambdaOptions) {
       d('method metadata', methodMetadata);
 
 
+      const event: APIGatewayEvent = getApiGatewayEvent(args);
+
+      d('request context is', event.requestContext);
+
+
       /*
           At this point args is an array
           I.E.:
