@@ -49,16 +49,20 @@ export function Authorizer(options?: AuthorizerOptions) {
         // context.indentity = retValue;
         // d('setting identity', context.indentity);
 
+        const statement = {
+          Action: 'execute-api:Invoke',
+          Effect: !!retValue ? 'Allow' : 'Deny',
+          Resource: event.methodArn.split('/')[0] + '/*',
+        };
+
+        d('statement is', statement);
+
         const policy = {
           principalId: retValue,
           policyDocument: {
             Version: '2012-10-17',
             Statement: [
-              {
-                Action: 'execute-api:Invoke',
-                Effect: !!retValue ? 'Allow' : 'Deny',
-                Resource: event.methodArn,
-              },
+              statement
             ],
           },
           context: {

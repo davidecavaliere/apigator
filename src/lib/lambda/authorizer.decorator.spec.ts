@@ -70,7 +70,7 @@ test('authorize function', (t) => {
           {
             Action: 'execute-api:Invoke',
             Effect: 'Allow',
-            Resource: 'some-method-arn',
+            Resource: 'some-method-arn/*',
           },
 
         ],
