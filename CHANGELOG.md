@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+<a name="1.9.21"></a>
+## [1.9.21](https://github.com/davidecavaliere/apigator/compare/v1.9.19...v1.9.21) (2019-01-08)
+
+
+
 <a name="1.9.19"></a>
 ## [1.9.19](https://github.com/davidecavaliere/apigator/compare/v1.9.17...v1.9.19) (2019-01-06)
 
