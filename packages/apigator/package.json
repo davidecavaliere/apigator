@@ -1,7 +1,13 @@
 {
-  "name": "microgamma",
-  "private": true,
-  "workspaces": "packages/*",
+  "name": "@microgamma/apigator",
+  "version": "1.9.21",
+  "description": "run your api code everywhere",
+  "main": "build/main/index.js",
+  "typings": "build/main/index.d.ts",
+  "module": "build/module/index.js",
+  "repository": "https://github.com/davidecavaliere/apigator",
+  "license": "MIT",
+  "keywords": [],
   "scripts": {
     "info": "npm-scripts-info",
     "build": "run-s clean && run-p build:*",

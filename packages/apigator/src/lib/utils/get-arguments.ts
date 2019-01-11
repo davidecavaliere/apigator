@@ -8,7 +8,7 @@ export type FunctionArg = string;
  * I.E.:
  * function test(arg1, arg2, arg3) { }
  *
- * const args = extractArguments(fn);
+ * const args = getArguments(fn);
  * d(args);
  *
  * // ['arg1', 'arg2', 'arg3']
@@ -16,7 +16,7 @@ export type FunctionArg = string;
  * @param fn
  * @returns {string[]}
  */
-export function extractArguments(fn: (...args) => any): FunctionArg[] {
+export function getArguments(fn: (...args) => any): FunctionArg[] {
 
   const FN_ARGS = /^[a-zA_Z]\s*[^\(]*\(\s*([^\)]*)\)/m;
   const FN_ARG_SPLIT = /,/;

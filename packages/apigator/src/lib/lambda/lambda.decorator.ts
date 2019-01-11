@@ -4,7 +4,7 @@ import debug from 'debug';
 import 'reflect-metadata';
 import { getSingleton } from '../index';
 import { APIGatewayEvent } from 'aws-lambda';
-import { extractArguments } from '../utils';
+import { getArguments } from '../utils';
 
 const d = debug('microgamma:apigator:lambda');
 
@@ -18,6 +18,7 @@ export interface LambdaOptions {
   private?: boolean;
   cors?: boolean;
   authorizer?: string;
+  description?: string;
 }
 
 function getApiGatewayEvent(args): APIGatewayEvent {
@@ -39,12 +40,10 @@ function extractHeaderParams(args: any[]) {
 }
 
 export function Lambda(options: LambdaOptions) {
-  d('constructing a class decorator', options);
+
   return (target: any, key: string, descriptor) => {
-    d('decorating method');
     d('target', target);
     d('function name', key);
-    d('descriptor', descriptor);
 
     options.name = options.name || key;
 
@@ -54,10 +53,10 @@ export function Lambda(options: LambdaOptions) {
     Reflect.defineMetadata(LambdaMetadata, lambdas, target);
 
     const originalFunction = descriptor.value;
+    const functionArgumentsNames = getArguments(originalFunction);
 
     // real framework that is being used to ran the function
     descriptor.value = async (...args: any[]) => {
-      const functionArgumentsNames = extractArguments(originalFunction);
       // here we have an array of string with names of arguments.
       /*
         i.e.: if function is defined such as:
@@ -181,12 +180,10 @@ export function Lambda(options: LambdaOptions) {
 
 export function getLambdaMetadata(instance) {
   const metadata = Reflect.getMetadata(LambdaMetadata, instance);
-  d('lambda metadata', metadata);
   return metadata ? [].concat(metadata) : [];
 }
 
 export function getLambdaMetadataFromClass(klass) {
   const metadata = Reflect.getMetadata(LambdaMetadata, klass.prototype);
-  d('lambda metadata', metadata);
   return metadata ? [].concat(metadata) : [];
 }
