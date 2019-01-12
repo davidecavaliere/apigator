@@ -5,8 +5,9 @@
   "scripts": {
 
     "info": "npm-scripts-info",
+    "prebuild": "run-s clean",
     "build": "tsc -b packages/*",
-    "clean" : "",
+    "clean": "trash packages/*/lib",
 
     "fix": "run-s fix:*",
     "fix:prettier": "prettier \"src/**/*.ts\" --write",
@@ -27,7 +28,6 @@
     "doc:publish": "gh-pages -m \"[ci skip] Updates\" -d build/docs",
     "version": "standard-version",
     "reset": "git clean -dfx && git reset --hard && npm i",
-    "clean": "trash build test",
     "all": "run-s reset test cov:check doc:html",
     "prepare-release": "run-s all version doc:publish"
   },
