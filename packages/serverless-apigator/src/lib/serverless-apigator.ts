@@ -5,7 +5,7 @@ import {
   getLambdaMetadataFromClass,
   LambdaOptions
 } from '@microgamma/apigator';
-import { getDebugger } from '@microgamma/ts-debug';
+import { getDebugger } from '@microgamma/loggator';
 
 import fs = require('fs-extra');
 

@@ -1,4 +1,6 @@
-import { getDebugger } from '@microgamma/ts-debug';
+// tslint:disable:no-namespace readonly-array no-object-mutation no-if-statement
+
+import { getDebugger } from '@microgamma/loggator';
 import { ReplaySubject } from 'rxjs';
 
 const d = getDebugger('o-injectable');

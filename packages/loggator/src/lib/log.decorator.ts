@@ -1,3 +1,5 @@
+// tslint:disable: no-object-mutation no-string-literal no-parameter-reassignment
+
 import debug, { IDebugger } from 'debug';
 import 'reflect-metadata';
 

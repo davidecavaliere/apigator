@@ -1,12 +1,13 @@
 {
   "name": "microgamma",
   "private": true,
-  "workspaces": "packages/*",
+  "workspaces": ["packages/*"],
   "scripts": {
+
     "info": "npm-scripts-info",
-    "build": "run-s clean && run-p build:*",
-    "build:main": "tsc -p tsconfig.json",
-    "build:module": "tsc -p tsconfig.module.json",
+    "build": "tsc -b packages/*",
+    "clean" : "",
+
     "fix": "run-s fix:*",
     "fix:prettier": "prettier \"src/**/*.ts\" --write",
     "fix:tslint": "tslint --fix --project .",
@@ -46,18 +47,11 @@
   "engines": {
     "node": ">=8.9"
   },
-  "dependencies": {
-    "@microgamma/ts-debug": "^0.3.1",
-    "@types/aws-lambda": "^8.10.11",
-    "reflect-metadata": "^0.1.12",
-    "rxjs": "^6.3.3"
-  },
+  "dependencies": {},
   "devDependencies": {
     "ava": "^1.0.0-beta.3",
     "codecov": "^3.0.0",
     "cz-conventional-changelog": "^2.1.0",
-    "debug": "^3.1.0",
-    "gh-pages": "^1.0.0",
     "npm-run-all": "^4.1.2",
     "npm-scripts-info": "^0.3.6",
     "nsp": "^3.2.1",
@@ -70,34 +64,7 @@
     "tslint-config-prettier": "^1.8.0",
     "tslint-immutable": "^4.5.1",
     "typedoc": "^0.11.1",
-    "typescript": "^2.9.0-dev.20180412",
-    "yarn": "^1.12.3"
-  },
-  "ava": {
-    "failFast": true,
-    "files": [
-      "build/main/**/*.spec.js"
-    ],
-    "sources": [
-      "build/main/**/*.js"
-    ]
-  },
-  "config": {
-    "commitizen": {
-      "path": "cz-conventional-changelog"
-    }
-  },
-  "greenkeeper": {
-    "ignore": [
-      "@types/node"
-    ]
-  },
-  "prettier": {
-    "singleQuote": true
-  },
-  "nyc": {
-    "exclude": [
-      "**/*.spec.js"
-    ]
+    "typescript": "~3.0.0",
+    "yarn": "1.13.*"
   }
 }

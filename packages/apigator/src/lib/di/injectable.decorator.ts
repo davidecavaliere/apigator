@@ -1,6 +1,6 @@
 // tslint:disable: no-object-mutation no-if-statement readonly-array no-mixed-interface
 import 'reflect-metadata';
-import { getDebugger } from '@microgamma/ts-debug/build/main/lib/log.decorator';
+import { getDebugger } from '@microgamma/loggator';
 
 const d = getDebugger('microgamma:di:injectable');
 
