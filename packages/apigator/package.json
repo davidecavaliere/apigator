@@ -81,10 +81,10 @@
   "ava": {
     "failFast": true,
     "files": [
-      "lib/**/*.spec.js"
+      "build/**/*.spec.js"
     ],
     "sources": [
-      "lib/**/*.js"
+      "build/**/*.js"
     ]
   },
   "config": {

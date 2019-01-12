@@ -4,6 +4,8 @@
     "rootDir": "src",
     "outDir": "lib"
   },
+  "include": ["src/**/*.ts"],
+  "exclude": ["node_modules/**"],
   "references": [
     { "path": "../apigator" },
     { "path": "../loggator" }
