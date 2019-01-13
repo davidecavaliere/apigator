@@ -7,7 +7,7 @@ import { Lambda, LambdaOptions } from '../..';
 const option1: PermissionOptions = {
   allow: async (arg1, arg2, arg3) => {
     console.log('checking permission', arg1, arg2, arg3);
-    return Promise.resolve(true);
+    return true;
   }
 };
 

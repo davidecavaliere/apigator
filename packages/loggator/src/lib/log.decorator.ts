@@ -16,14 +16,17 @@ export function Log(subspace?: string) {
 
 
     target[propertyKey] = {
+      // @ts-ignore
       d: (...args) => {
 
         subspace = subspace || target.constructor.name;
 
+        // @ts-ignore
         const ns = namespace ? [namespace, subspace].join(':') : subspace;
 
         const loggerFn: IDebugger = getDebugger(ns);
 
+        // @ts-ignore
         return loggerFn.apply(null, args);
       }
     };

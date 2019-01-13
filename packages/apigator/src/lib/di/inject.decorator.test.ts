@@ -1,5 +1,4 @@
 // tslint:disable:no-expression-statement no-object-mutation max-classes-per-file
-import test from 'ava';
 import { Injectable } from './injectable.decorator';
 import { Inject } from './inject.decorator';
 
@@ -44,15 +43,20 @@ class Consumer {
 
 }
 
-let consumer: Consumer;
+describe('inject decorator', () => {
+  let consumer: Consumer;
 
-test.beforeEach(() => {
-  consumer = new Consumer();
+  beforeEach(() => {
+    consumer = new Consumer();
+  });
+
+  it('@Inject', () => {
+
+    expect(consumer.testClassA instanceof TestClassA).toBeTruthy();
+
+  });
+
 });
 
-test('@Inject', (t) => {
 
-  t.is(consumer.testClassA instanceof TestClassA, true);
-  // t.is(consumer.testClassB, {});
 
-});

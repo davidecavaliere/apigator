@@ -2,10 +2,15 @@
   "name": "@microgamma/apigator",
   "version": "1.9.21",
   "description": "run your api code everywhere",
-  "main": "build/main/index.js",
-  "typings": "build/main/index.d.ts",
-  "module": "build/module/index.js",
-  "repository": "https://github.com/davidecavaliere/apigator",
+  "main": "lib/index.js",
+  "typings": "lib/index.d.ts",
+  "module": "lib/index.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "files": [
+    "lib"
+  ],
   "license": "MIT",
   "keywords": [],
   "scripts": {
@@ -15,9 +20,8 @@
     "fix": "run-s fix:*",
     "fix:prettier": "prettier \"src/**/*.ts\" --write",
     "fix:tslint": "tslint --fix --project .",
-    "test": "run-s build test:*",
-    "test:lint": "tslint --project . ",
-    "test:unit": "nyc --silent ava",
+    "test": "run-s test:*",
+    "test:unit": "jest",
     "test:unit:debug": "node --inspect  nyc --silent ava",
     "watch": "run-s clean build:main && run-p \"build:main -- -w\" \"test:unit -- --watch\"",
     "watch:debug": "run-s clean build:main && run-p \"build:main -- -w\" \"test:unit:debug -- --watch\"",
@@ -35,74 +39,32 @@
     "all": "run-s reset test cov:check doc:html",
     "prepare-release": "run-s all version doc:publish"
   },
-  "scripts-info": {
-    "info": "Display information about the package scripts",
-    "build": "Clean and rebuild the project",
-    "fix": "Try to automatically fix any linting problems",
-    "test": "Lint and unit test the project",
-    "watch": "Watch and rebuild the project on save, then rerun relevant tests",
-    "cov": "Rebuild, run tests, then create and open the coverage report",
-    "doc": "Generate HTML API documentation and open it in a browser",
-    "doc:json": "Generate API documentation in typedoc JSON format",
-    "changelog": "Bump package.json version, update CHANGELOG.md, tag release",
-    "reset": "Delete all untracked files and reset the repo to the last commit",
-    "prepare-release": "One-step: clean, build, test, publish docs, and prep a release"
-  },
-  "engines": {
-    "node": ">=8.9"
-  },
   "dependencies": {
-    "@microgamma/loggator": "^0.3.1",
+    "@microgamma/loggator": "file:../loggator",
     "@types/aws-lambda": "^8.10.11",
     "reflect-metadata": "^0.1.12",
     "rxjs": "^6.3.3"
   },
-  "devDependencies": {
-    "ava": "^1.0.0-beta.3",
-    "codecov": "^3.0.0",
-    "cz-conventional-changelog": "^2.1.0",
-    "debug": "^3.1.0",
-    "gh-pages": "^1.0.0",
-    "npm-run-all": "^4.1.2",
-    "npm-scripts-info": "^0.3.6",
-    "nsp": "^3.2.1",
-    "nyc": "^11.5.0",
-    "opn-cli": "^3.1.0",
-    "prettier": "^1.10.2",
-    "standard-version": "^4.0.0",
-    "trash-cli": "^1.4.0",
-    "tslint": "^5.4.3",
-    "tslint-config-prettier": "^1.8.0",
-    "tslint-immutable": "^4.5.1",
-    "typedoc": "^0.11.1",
-    "typescript": "^3.2.2",
-    "yarn": "^1.12.3"
-  },
-  "ava": {
-    "failFast": true,
-    "files": [
-      "build/**/*.spec.js"
+  "devDependencies": {},
+  "jest": {
+    "roots": [
+      "<rootDir>/src"
     ],
-    "sources": [
-      "build/**/*.js"
-    ]
-  },
-  "config": {
-    "commitizen": {
-      "path": "cz-conventional-changelog"
-    }
-  },
-  "greenkeeper": {
-    "ignore": [
-      "@types/node"
-    ]
-  },
-  "prettier": {
-    "singleQuote": true
-  },
-  "nyc": {
-    "exclude": [
-      "**/*.spec.js"
+    "transform": {
+      "^.+\\.ts?$": "ts-jest"
+    },
+    "testRegex": "(/__tests__/.*|(\\.|/)(test))\\.ts?$",
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js",
+      "jsx",
+      "json",
+      "node"
+    ],
+    "reporters": [
+      "default"
+
     ]
   }
 }

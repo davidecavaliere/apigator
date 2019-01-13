@@ -1,4 +1,8 @@
 node_modules
 .idea/
 
-packages/**/build
+packages/**/lib
+!packages/src/lib
+packages/**/coverage
+packages/**/.nyc_output
+

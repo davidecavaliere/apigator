@@ -1,13 +1,11 @@
 {
-  "extends": "../tsconfig.settings.json",
+  "extends": "../../tsconfig.json",
   "compilerOptions": {
-    "rootDir": "src",
-    "outDir": "lib"
+    "outDir": "lib",
+    "rootDir": "src"
   },
-  "include": ["src/**/*.ts"],
-  "exclude": ["node_modules/**"],
   "references": [
-    { "path": "../apigator" },
-    { "path": "../loggator" }
+    { "path": "../loggator" },
+    { "path": "../apigator"}
   ]
 }

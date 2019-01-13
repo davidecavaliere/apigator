@@ -56,7 +56,6 @@ class TestClass {
   public authorizer() {
     return true;
   }
-
 }
 
 
@@ -65,6 +64,7 @@ test.beforeEach((t) => {
 
   plugin = new ServerlessApigator(serverless, { stage: 'test' });
 
+  // @ts-ignore
   Sinon.stub(plugin, 'importModule').callsFake(async () => {
     return { default: TestClass };
 

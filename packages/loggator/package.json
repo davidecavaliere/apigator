@@ -2,24 +2,24 @@
   "name": "@microgamma/loggator",
   "version": "0.3.1",
   "description": "typescript decorator for easy log",
-  "main": "build/main/index.js",
-  "typings": "build/main/index.d.ts",
-  "module": "build/module/index.js",
-  "repository": "https://github.com/davidecavaliere/ts-debug",
+  "main": "lib/index.js",
+  "typings": "lib/index.d.ts",
+  "module": "lib/index.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "files": ["lib"],
   "license": "MIT",
   "keywords": [],
   "scripts": {
     "info": "npm-scripts-info",
     "build": "run-s clean && run-p build:*",
     "build:main": "tsc -p tsconfig.json",
-    "build:module": "tsc -p tsconfig.module.json",
     "fix": "run-s fix:*",
     "fix:prettier": "prettier \"src/**/*.ts\" --write",
     "fix:tslint": "tslint --fix --project .",
-    "test": "run-s build test:*",
-    "test:lint": "tslint --project . && prettier \"src/**/*.ts\" --list-different",
-    "test:unit": "nyc --silent ava",
-    "test:nsp": "nsp check",
+    "test": "run-s test:*",
+    "test:unit": "ava",
     "watch": "run-s clean build:main && run-p \"build:main -- -w\" \"test:unit -- --watch\"",
     "cov": "run-s build test:unit cov:html && opn coverage/index.html",
     "cov:html": "nyc report --reporter=html",
@@ -31,7 +31,7 @@
     "doc:publish": "gh-pages -m \"[ci skip] Updates\" -d build/docs",
     "version": "standard-version",
     "reset": "git clean -dfx && git reset --hard && npm i",
-    "clean": "trash build test",
+    "clean": "trash lib",
     "all": "run-s reset test cov:check doc:html",
     "prepare-release": "run-s all version doc:publish"
   },
@@ -53,68 +53,16 @@
   },
   "dependencies": {
     "@types/debug": "^0.0.30",
-    "debug": "^3.1.0",
     "reflect-metadata": "^0.1.12"
   },
-  "devDependencies": {
-    "ava": "^1.0.0-beta.3",
-    "codecov": "^3.0.0",
-    "cz-conventional-changelog": "^2.1.0",
-    "gh-pages": "^1.0.0",
-    "npm-run-all": "^4.1.2",
-    "npm-scripts-info": "^0.3.6",
-    "nsp": "^3.2.1",
-    "nyc": "^11.5.0",
-    "opn-cli": "^3.1.0",
-    "prettier": "^1.10.2",
-    "standard-version": "^4.0.0",
-    "trash-cli": "^1.4.0",
-    "ts-jest": "^22.4.4",
-    "tslint": "^5.4.3",
-    "tslint-config-prettier": "^1.8.0",
-    "tslint-immutable": "^4.5.1",
-    "typedoc": "^0.11.1",
-    "typescript": "^2.4.1"
-  },
   "ava": {
-    "failFast": true,
-    "files": [
-      "build/main/**/*.spec.js"
+    "files": ["./lib/**/*.spec.js"],
+    "compileEnhanments": false,
+    "extensions": [
+      "ts"
     ],
-    "sources": [
-      "build/main/**/*.js"
-    ]
-  },
-  "config": {
-    "commitizen": {
-      "path": "cz-conventional-changelog"
-    }
-  },
-  "greenkeeper": {
-    "ignore": [
-      "@types/node"
-    ]
-  },
-  "prettier": {
-    "singleQuote": true
-  },
-  "nyc": {
-    "exclude": [
-      "**/*.spec.js"
-    ]
-  },
-  "jest": {
-    "transform": {
-      "^.+\\.tsx?$": "ts-jest"
-    },
-    "testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.(jsx?|tsx?)$",
-    "moduleFileExtensions": [
-      "ts",
-      "tsx",
-      "js",
-      "jsx",
-      "json",
-      "node"
+    "require": [
+      "ts-node/register"
     ]
   }
 }

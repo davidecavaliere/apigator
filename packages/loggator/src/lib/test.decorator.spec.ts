@@ -1,8 +1,8 @@
 // tslint:disable:no-expression-statement, max-classes-per-file
-import { test } from 'ava';
+import test from 'ava';
 import 'reflect-metadata';
 import { getDebugger } from './log.decorator';
-import { getTestMetadata, Test, testMetadata } from './test.decorator';
+import { getTestMetadata, Test } from './test.decorator';
 
 const d = getDebugger('test.decorator');
 

@@ -1,7 +1,7 @@
 // tslint:disable:no-expression-statement, max-classes-per-file
-import { test } from 'ava';
 import { Log, setNamespace } from './log.decorator';
 import 'reflect-metadata';
+import test from 'ava';
 
 
 setNamespace('myNamespace');

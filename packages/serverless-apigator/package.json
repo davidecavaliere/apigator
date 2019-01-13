@@ -2,23 +2,25 @@
   "name": "@microgamma/serverless-apigator",
   "version": "1.4.32",
   "description": "a typescript-starter project",
-  "main": "build/main/index.js",
-  "typings": "build/main/index.d.ts",
-  "module": "build/module/index.js",
-  "repository": "https://github.com/davidecavaliere/serverless-apigator",
+  "main": "lib/index.js",
+  "typings": "lib/index.d.ts",
+  "module": "lib/index.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "files": ["lib"],
   "license": "MIT",
   "keywords": [],
   "scripts": {
     "info": "npm-scripts-info",
     "build": "run-s clean && run-p build:*",
+    "clean": "trash lib",
     "build:main": "tsc -p tsconfig.json",
-    "build:module": "tsc -p tsconfig.module.json",
     "fix": "run-s fix:*",
     "fix:prettier": "prettier \"src/**/*.ts\" --write",
     "fix:tslint": "tslint --fix --project .",
-    "test": "run-s build test:*",
-    "test:lint": "tslint --project .",
-    "test:unit": "nyc --silent ava",
+    "test": "run-s test:*",
+    "test:unit": "ava",
     "watch": "run-s clean build:main && run-p \"build:main -- -w\" \"test:unit -- --watch\"",
     "cov": "run-s build test:unit cov:html && opn coverage/index.html",
     "cov:html": "nyc report --reporter=html",
@@ -32,7 +34,6 @@
     "doc:publish": "gh-pages -m \"[ci skip] Updates\" -d build/docs",
     "version": "standard-version",
     "reset": "git clean -dfx && git reset --hard && npm i",
-    "clean": "trash build test",
     "all": "run-s reset test cov:check doc:html",
     "prepare-release": "run-s all version doc:publish"
   },
@@ -53,39 +54,18 @@
     "node": ">=8.9"
   },
   "dependencies": {
-    "@microgamma/ts-debug": "0.3.x",
+    "@microgamma/loggator": "0.3.x",
     "fs-extra": "^7.0.1",
     "reflect-metadata": "^0.1.12"
   },
-  "devDependencies": {
-    "@microgamma/apigator": "1.9.x",
-    "@types/node": "^10.12.18",
-    "@types/sinon": "^5.0.1",
-    "ava": "^1.0.0-beta.5.1",
-    "codecov": "^3.0.2",
-    "cz-conventional-changelog": "^2.1.0",
-    "gh-pages": "^1.2.0",
-    "npm-run-all": "^4.1.3",
-    "nyc": "^12.0.2",
-    "opn-cli": "^3.1.0",
-    "prettier": "^1.13.4",
-    "serverless": "^1.30.1",
-    "sinon": "^7.2.2",
-    "standard-version": "^4.4.0",
-    "trash-cli": "^1.4.0",
-    "tslint": "^5.10.0",
-    "tslint-config-prettier": "^1.13.0",
-    "tslint-immutable": "^4.5.4",
-    "typedoc": "^0.11.1",
-    "typescript": "^2.9.1"
-  },
   "ava": {
-    "failFast": true,
-    "files": [
-      "build/main/**/*.spec.js"
+    "files": ["./lib/**/*.spec.js"],
+    "compileEnhanments": false,
+    "extensions": [
+      "ts"
     ],
-    "sources": [
-      "build/main/**/*.js"
+    "require": [
+      "ts-node/register"
     ]
   },
   "config": {
@@ -104,5 +84,8 @@
   "peerDependencies": {
     "@microgamma/apigator": "1.9.x",
     "serverless": "^1.30.1"
+  },
+  "devDependencies": {
+    "sinon": "^7.2.2"
   }
 }
