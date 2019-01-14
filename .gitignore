@@ -5,4 +5,5 @@ packages/**/lib
 !packages/src/lib
 packages/**/coverage
 packages/**/.nyc_output
-
+lerna-debug.log
+packages/**/yarn-error.log
