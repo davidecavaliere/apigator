@@ -1,0 +1,13 @@
+{
+  "extends": "../../tsconfig.json",
+  "compilerOptions": {
+    "outDir": "lib",
+    "rootDir": "src",
+    "types": ["node"],
+    "strictFunctionTypes": false
+  },
+  "include": ["src/**/*.ts"],
+  "references": [
+    { "path": "../loggator" }
+  ]
+}

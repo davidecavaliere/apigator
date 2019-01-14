@@ -13,9 +13,9 @@
 
     // Immutability rules
     "readonly-keyword": false,
-    "readonly-array": true,
+    "readonly-array": false,
     "no-let": false,
-    "no-object-mutation": true,
+    "no-object-mutation": false,
     "no-delete": true,
     "no-method-signature": true,
 
@@ -23,7 +23,7 @@
     "no-this": false,
     "no-class": false,
     "no-mixed-interface": true,
-    "no-if-statement": true,
+    "no-if-statement": false,
     "no-console": false,
     /* end tslint-immutable rules */
 
@@ -31,7 +31,10 @@
     "ordered-imports": false,
     "no-submodule-imports": false,
     "ban-types": false,
-    "object-literal-sort-keys": false
+    "object-literal-sort-keys": false,
+    "variable-name": false,
+    "member-ordering": false,
+    "no-string-literal": false
 
   }
 }
