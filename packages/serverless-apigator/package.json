@@ -86,6 +86,8 @@
     "serverless": "^1.30.1"
   },
   "devDependencies": {
-    "sinon": "^7.2.2"
+    "sinon": "^7.2.2",
+    "@microgamma/apigator": "1.9.x",
+    "serverless": "^1.30.1"
   }
 }

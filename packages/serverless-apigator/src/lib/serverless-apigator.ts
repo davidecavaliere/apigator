@@ -10,7 +10,7 @@ import { getDebugger } from '@microgamma/loggator';
 import fs = require('fs-extra');
 
 
-const debug = getDebugger('microgamma:serveless-apigator');
+const debug = getDebugger('microgamma:serverless-apigator');
 
 export class ServerlessApigator {
 
