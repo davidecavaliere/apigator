@@ -1,8 +1,7 @@
 node_modules
 .idea/
 
-packages/**/lib
-!packages/src/lib
+packages/*/lib
 packages/**/coverage
 packages/**/.nyc_output
 lerna-debug.log

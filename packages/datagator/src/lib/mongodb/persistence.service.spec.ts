@@ -1,7 +1,7 @@
 // tslint:disable:no-expression-statement no-object-mutation member-access max-classes-per-file
 import test from 'ava';
 import { getDebugger } from '@microgamma/loggator';
-import { BaseModel, Persistence, PersistenceService } from '../';
+import { BaseModel, Persistence, PersistenceService } from '@microgamma/datagator';
 
 const d = getDebugger('microgamma:persistence.service.spec');
 

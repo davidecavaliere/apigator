@@ -5,6 +5,7 @@
   "author": "Davide Cavaliere <cavaliere.davide@gmail.com>",
   "homepage": "https://github.com/davidecavaliere/apigator#readme",
   "license": "MIT",
+  "main": "lib/index.js",
   "typings": "lib/index.d.ts",
   "module": "lib/index.js",
   "directories": {

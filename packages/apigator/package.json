@@ -40,7 +40,7 @@
     "prepare-release": "run-s all version doc:publish"
   },
   "dependencies": {
-    "@microgamma/loggator": "file:../loggator",
+    "@microgamma/loggator": "*",
     "@types/aws-lambda": "^8.10.11",
     "reflect-metadata": "^0.1.12",
     "rxjs": "^6.3.3"
