@@ -1,6 +1,6 @@
 {
   "name": "@microgamma/serverless-apigator",
-  "version": "1.4.32",
+  "version": "1.4.34",
   "description": "a typescript-starter project",
   "main": "lib/index.js",
   "typings": "lib/index.d.ts",
@@ -8,7 +8,9 @@
   "directories": {
     "lib": "lib"
   },
-  "files": ["lib"],
+  "files": [
+    "lib"
+  ],
   "license": "MIT",
   "keywords": [],
   "scripts": {
@@ -59,7 +61,9 @@
     "reflect-metadata": "^0.1.12"
   },
   "ava": {
-    "files": ["./lib/**/*.spec.js"],
+    "files": [
+      "./lib/**/*.spec.js"
+    ],
     "compileEnhanments": false,
     "extensions": [
       "ts"
@@ -86,8 +90,8 @@
     "serverless": "^1.30.1"
   },
   "devDependencies": {
-    "sinon": "^7.2.2",
     "@microgamma/apigator": "1.9.x",
-    "serverless": "^1.30.1"
+    "serverless": "^1.30.1",
+    "sinon": "^7.2.2"
   }
 }
