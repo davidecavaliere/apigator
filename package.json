@@ -27,7 +27,7 @@
     "doc:html": "typedoc src/ --target ES6 --mode file --out build/docs",
     "doc:json": "typedoc src/ --target ES6 --mode file --json build/docs/typedoc.json",
     "doc:publish": "gh-pages -m \"[ci skip] Updates\" -d build/docs",
-    "version": "standard-version",
+    "version": "lerna version",
     "reset": "git clean -dfx && git reset --hard && npm i",
     "all": "run-s reset test cov:check doc:html",
     "prepare-release": "run-s all version doc:publish"
@@ -92,5 +92,6 @@
     "@microgamma/datagator": "file:packages/datagator",
     "@microgamma/loggator": "file:packages/loggator",
     "@microgamma/serverless-apigator": "file:packages/serverless-apigator"
-  }
+  },
+  "version": "0.0.1"
 }
