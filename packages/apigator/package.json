@@ -1,6 +1,6 @@
 {
   "name": "@microgamma/apigator",
-  "version": "1.9.23",
+  "version": "1.9.31",
   "description": "run your api code everywhere",
   "main": "lib/index.js",
   "typings": "lib/index.d.ts",
@@ -39,12 +39,11 @@
     "prepare-release": "run-s all version doc:publish"
   },
   "dependencies": {
-    "@microgamma/loggator": "*",
+    "@microgamma/loggator": "^1.9.31",
     "@types/aws-lambda": "^8.10.11",
     "reflect-metadata": "^0.1.12",
     "rxjs": "^6.3.3"
   },
-  "devDependencies": {},
   "jest": {
     "roots": [
       "<rootDir>/src"
