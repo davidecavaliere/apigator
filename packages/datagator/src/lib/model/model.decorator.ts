@@ -12,12 +12,7 @@ export interface ModelOptions {
 export function Model(options: ModelOptions) {
   d('running model decorator with', options);
   return <TFunction extends new (...args) => any>(target: TFunction) => {
-    // console.log('decorating a class', target);
-
-
-
     Reflect.metadata(ModelMetadata, options)(target);
-
   };
 }
 

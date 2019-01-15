@@ -15,15 +15,13 @@
   "keywords": [],
   "scripts": {
     "info": "npm-scripts-info",
-    "build": "run-s clean && run-p build:*",
-    "build:main": "tsc -p tsconfig.json",
-    "fix": "run-s fix:*",
-    "fix:prettier": "prettier \"src/**/*.ts\" --write",
-    "fix:tslint": "tslint --fix --project .",
+    "prebuild": "run-s clean",
+    "build": "tsc -p tsconfig.json",
     "test": "run-s test:*",
-    "test:unit": "jest",
+    "test:unit": "nyc --silent ava",
+    "test:lint": "tslint --project . ",
     "test:unit:debug": "node --inspect  nyc --silent ava",
-    "watch": "run-s clean build:main && run-p \"build:main -- -w\" \"test:unit -- --watch\"",
+    "watch": "run-s clean build && run-p \"build -- -w\" \"test:unit -- --watch\"",
     "watch:debug": "run-s clean build:main && run-p \"build:main -- -w\" \"test:unit:debug -- --watch\"",
     "cov": "run-s build test:unit cov:html && opn coverage/index.html",
     "cov:html": "nyc report --reporter=html",
@@ -34,7 +32,7 @@
     "doc:json": "typedoc src/ --target ES6 --mode file --json build/docs/typedoc.json",
     "doc:publish": "gh-pages -m \"[ci skip] Updates\" -d build/docs",
     "reset": "git clean -dfx && git reset --hard && npm i",
-    "clean": "trash build test",
+    "clean": "trash lib",
     "all": "run-s reset test cov:check doc:html",
     "prepare-release": "run-s all version doc:publish"
   },
@@ -43,6 +41,28 @@
     "@types/aws-lambda": "^8.10.11",
     "reflect-metadata": "^0.1.12",
     "rxjs": "^6.3.3"
+  },
+  "ava": {
+    "files": [
+      "./lib/**/*.spec.js"
+    ],
+    "compileEnhanments": false,
+    "extensions": [
+      "ts"
+    ],
+    "require": [
+      "ts-node/register"
+    ]
+  },
+  "config": {
+    "commitizen": {
+      "path": "cz-conventional-changelog"
+    }
+  },
+  "nyc": {
+    "exclude": [
+      "**/*.spec.js"
+    ]
   },
   "jest": {
     "roots": [

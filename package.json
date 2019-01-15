@@ -1,6 +1,7 @@
 {
   "name": "microgamma",
   "private": true,
+  "version": "0.0.1",
   "workspaces": [
     "packages/*"
   ],
@@ -9,41 +10,20 @@
     "prebuild": "run-s clean",
     "build": "tsc -b packages/*",
     "clean": "trash packages/*/lib",
-    "fix": "run-s fix:*",
-    "fix:prettier": "prettier \"src/**/*.ts\" --write",
-    "fix:tslint": "tslint --fix --project .",
+
     "pretest": "run-s build",
-    "test": "lerna run test",
-    "test:lint": "tslint --project . ",
-    "test:unit": "nyc --silent ava",
-    "test:unit:debug": "node --inspect  nyc --silent ava",
-    "watch": "run-s clean build:main && run-p \"build:main -- -w\" \"test:unit -- --watch\"",
-    "watch:debug": "run-s clean build:main && run-p \"build:main -- -w\" \"test:unit:debug -- --watch\"",
-    "cov": "run-s build test:unit cov:html && opn coverage/index.html",
-    "cov:html": "nyc report --reporter=html",
-    "cov:send": "nyc report --reporter=lcov > coverage.lcov && codecov",
-    "cov:check": "nyc report && nyc check-coverage --lines 100 --functions 100 --branches 100",
-    "doc": "run-s doc:html && opn build/docs/index.html",
-    "doc:html": "typedoc src/ --target ES6 --mode file --out build/docs",
-    "doc:json": "typedoc src/ --target ES6 --mode file --json build/docs/typedoc.json",
-    "doc:publish": "gh-pages -m \"[ci skip] Updates\" -d build/docs",
-    "lerna:version": "lerna version",
-    "reset": "git clean -dfx && git reset --hard && npm i",
-    "all": "run-s reset test cov:check doc:html",
-    "prepare-release": "run-s all version doc:publish"
+    "test": "run-s test:*",
+
+    "test:lint": "lerna run test:lint",
+    "test:unit": "lerna run test:unit",
+
+    "release": "lerna version"
   },
   "scripts-info": {
     "info": "Display information about the package scripts",
     "build": "Clean and rebuild the project",
-    "fix": "Try to automatically fix any linting problems",
     "test": "Lint and unit test the project",
-    "watch": "Watch and rebuild the project on save, then rerun relevant tests",
-    "cov": "Rebuild, run tests, then create and open the coverage report",
-    "doc": "Generate HTML API documentation and open it in a browser",
-    "doc:json": "Generate API documentation in typedoc JSON format",
-    "changelog": "Bump package.json version, update CHANGELOG.md, tag release",
-    "reset": "Delete all untracked files and reset the repo to the last commit",
-    "prepare-release": "One-step: clean, build, test, publish docs, and prep a release"
+    "release": "One-step: clean, build, test, publish docs, and prep a release"
   },
   "engines": {
     "node": ">=8.9"
@@ -64,7 +44,6 @@
     "nsp": "^3.2.1",
     "nyc": "^12.0.2",
     "opn-cli": "^3.1.0",
-    "prettier": "^1.13.4",
     "serverless": "^1.30.1",
     "sinon": "^7.2.2",
     "standard-version": "^4.4.0",
@@ -72,26 +51,15 @@
     "ts-jest": "^23.10.5",
     "ts-node": "^7.0.1",
     "tslint": "^5.10.0",
-    "tslint-config-prettier": "^1.13.0",
     "tslint-immutable": "^4.5.4",
     "typedoc": "^0.11.1",
     "typescript": "^3.2.2",
     "yarn": "^1.12.3"
-  },
-  "ava": {
-    "compileEnhanments": false,
-    "extensions": [
-      "ts"
-    ],
-    "require": [
-      "ts-node/register"
-    ]
   },
   "dependencies": {
     "@microgamma/apigator": "file:packages/apigator",
     "@microgamma/datagator": "file:packages/datagator",
     "@microgamma/loggator": "file:packages/loggator",
     "@microgamma/serverless-apigator": "file:packages/serverless-apigator"
-  },
-  "version": "0.0.1"
+  }
 }

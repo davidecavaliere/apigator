@@ -2,6 +2,7 @@
 
 import { getDebugger } from '@microgamma/loggator';
 import { ReplaySubject } from 'rxjs';
+import { Constructor } from '@microgamma/apigator';
 
 const d = getDebugger('o-injectable');
 
@@ -16,13 +17,7 @@ export namespace ODI {
 
   const injectables$: ReplaySubject<any> = new ReplaySubject<any>();
 
-  export interface Constructor {
-    /**
-     * Creates a new function.
-     * @param args A list of arguments the function accepts.
-     */
-    new(...args: string[]): any;
-  }
+
 
   export function Injetable(target) {
     d(`making ${target.name} injectable`);

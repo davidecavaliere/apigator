@@ -15,48 +15,32 @@
   "keywords": [],
   "scripts": {
     "info": "npm-scripts-info",
-    "build": "run-s clean && run-p build:*",
     "clean": "trash lib",
-    "build:main": "tsc -p tsconfig.json",
-    "fix": "run-s fix:*",
-    "fix:prettier": "prettier \"src/**/*.ts\" --write",
-    "fix:tslint": "tslint --fix --project .",
+    "build": "tsc -p tsconfig.json",
     "test": "run-s test:*",
-    "test:unit": "ava",
-    "watch": "run-s clean build:main && run-p \"build:main -- -w\" \"test:unit -- --watch\"",
+    "test:lint": "tslint --project . ",
+    "test:unit": "nyc --silent ava",
+    "watch": "run-s clean build && run-p \"build:main -- -w\" \"test:unit -- --watch\"",
+
     "cov": "run-s build test:unit cov:html && opn coverage/index.html",
     "cov:html": "nyc report --reporter=html",
     "cov:json": "nyc report --reporter=json > coverage/coverage.json",
     "cov:send": "nyc report --reporter=lcov > coverage.lcov && codecov",
     "cov:send:ci": "nyc report --reporter=json > coverage.json && codecov -t ${CODECOV_TOKEN}",
     "cov:check": "nyc report && nyc check-coverage --lines 100 --functions 100 --branches 100",
+
     "doc": "run-s doc:html && opn build/docs/index.html",
     "doc:html": "typedoc src/ --target ES6 --mode file --out build/docs",
     "doc:json": "typedoc src/ --target ES6 --mode file --json build/docs/typedoc.json",
-    "doc:publish": "gh-pages -m \"[ci skip] Updates\" -d build/docs",
-    "reset": "git clean -dfx && git reset --hard && npm i",
-    "all": "run-s reset test cov:check doc:html",
-    "prepare-release": "run-s all version doc:publish"
-  },
-  "scripts-info": {
-    "info": "Display information about the package scripts",
-    "build": "Clean and rebuild the project",
-    "fix": "Try to automatically fix any linting problems",
-    "test": "Lint and unit test the project",
-    "watch": "Watch and rebuild the project on save, then rerun relevant tests",
-    "cov": "Rebuild, run tests, then create and open the coverage report",
-    "doc": "Generate HTML API documentation and open it in a browser",
-    "doc:json": "Generate API documentation in typedoc JSON format",
-    "version": "Bump package.json version, update CHANGELOG.md, tag release",
-    "reset": "Delete all untracked files and reset the repo to the last commit",
-    "prepare-release": "One-step: clean, build, test, publish docs, and prep a release"
+    "doc:publish": "gh-pages -m \"[ci skip] Updates\" -d build/docs"
+
   },
   "engines": {
     "node": ">=8.9"
   },
   "dependencies": {
     "@microgamma/apigator": "^1.9.32",
-    "@microgamma/loggator": "0.3.x",
+    "@microgamma/loggator": "*",
     "fs-extra": "^7.0.1",
     "reflect-metadata": "^0.1.12"
   },
@@ -77,16 +61,12 @@
       "path": "cz-conventional-changelog"
     }
   },
-  "prettier": {
-    "singleQuote": true
-  },
   "nyc": {
     "exclude": [
       "**/*.spec.js"
     ]
   },
   "peerDependencies": {
-    "@microgamma/apigator": "1.9.x",
     "serverless": "^1.30.1"
   },
   "devDependencies": {

@@ -63,7 +63,7 @@ test('permission decorator', t => {
 //
 // });
 
-test.only('findAll method should return 2: promised', async (t) => {
+test.skip('findAll method should return 2: promised', async (t) => {
 
   const retValue = await instance.findAll.apply(instance, [
     { // aws event

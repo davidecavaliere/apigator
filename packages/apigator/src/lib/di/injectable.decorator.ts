@@ -4,14 +4,7 @@ import { getDebugger } from '@microgamma/loggator';
 
 const d = getDebugger('microgamma:di:injectable');
 
-export interface Constructor {
-  /**
-   * Creates a new function.
-   * @param args A list of arguments the function accepts.
-   */
-  new(...args: string[]): any;
-}
-
+export type Constructor = new (...args: string[]) => any;
 
 const injectables: { [className: string]: Constructor } = {};
 

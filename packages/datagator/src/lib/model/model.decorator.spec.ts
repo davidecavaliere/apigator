@@ -1,6 +1,6 @@
 // tslint:disable:no-expression-statement no-object-mutation
 import test from 'ava';
-import { Model, ModelOptions } from './model.decorator';
+import { getModelMetadata, Model, ModelOptions } from '@microgamma/datagator';
 
 const options: ModelOptions = {
   name: 'modelFactory-name'
@@ -21,10 +21,8 @@ test.beforeEach(() => {
 });
 
 test('model decorator', t => {
-  console.log('instance', instance);
+
+
+  t.is(getModelMetadata(instance), options);
 
 });
-
-// test('should store some metadata', t => {
-//   t.is(getModelMetadata(instance), options);
-// });

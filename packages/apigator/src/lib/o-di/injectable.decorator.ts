@@ -1,16 +1,10 @@
 // tslint:disable: no-object-mutation no-if-statement readonly-array no-mixed-interface
 import 'reflect-metadata';
 import { getDebugger } from '@microgamma/loggator';
+import { Constructor } from '@microgamma/apigator';
 
 const d = getDebugger('microgamma:di:injectable');
 
-export interface Constructor {
-  /**
-   * Creates a new function.
-   * @param args A list of arguments the function accepts.
-   */
-  new(...args: string[]): any;
-}
 
 
 const injectables: { [className: string]: Constructor } = {};
