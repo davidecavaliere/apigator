@@ -10,13 +10,10 @@
     "prebuild": "run-s clean",
     "build": "tsc -b packages/*",
     "clean": "trash packages/*/lib",
-
     "pretest": "run-s build",
     "test": "run-s test:*",
-
     "test:lint": "lerna run test:lint",
     "test:unit": "lerna run test:unit",
-
     "release": "lerna version"
   },
   "scripts-info": {
@@ -52,6 +49,7 @@
     "ts-node": "^7.0.1",
     "tslint": "^5.10.0",
     "tslint-immutable": "^4.5.4",
+    "tslint-config-prettier": "^1.17.0",
     "typedoc": "^0.11.1",
     "typescript": "^3.2.2",
     "yarn": "^1.12.3"

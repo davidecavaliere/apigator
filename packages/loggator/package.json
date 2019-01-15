@@ -68,5 +68,8 @@
     "require": [
       "ts-node/register"
     ]
+  },
+  "prettier": {
+    "singleQuote": true
   }
 }
