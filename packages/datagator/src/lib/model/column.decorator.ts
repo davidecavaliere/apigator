@@ -16,6 +16,7 @@ export function Column(options?: ColumnOptions): PropertyDecorator {
 
   return <TFunction extends Function>(target: TFunction, propertyKey: string) => {
 
+    // tslint:disable: object-literal-shorthand
     Object.defineProperty(target, propertyKey, {
       get: function() {
         // d('getting through getter');
