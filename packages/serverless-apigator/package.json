@@ -1,6 +1,6 @@
 {
   "name": "@microgamma/serverless-apigator",
-  "version": "1.9.32",
+  "version": "1.10.0",
   "description": "a typescript-starter project",
   "main": "lib/index.js",
   "typings": "lib/index.d.ts",
@@ -21,26 +21,23 @@
     "test:lint": "tslint --project . ",
     "test:unit": "nyc --silent ava",
     "watch": "run-s clean build && run-p \"build:main -- -w\" \"test:unit -- --watch\"",
-
     "cov": "run-s build test:unit cov:html && opn coverage/index.html",
     "cov:html": "nyc report --reporter=html",
     "cov:json": "nyc report --reporter=json > coverage/coverage.json",
     "cov:send": "nyc report --reporter=lcov > coverage.lcov && codecov",
     "cov:send:ci": "nyc report --reporter=json > coverage.json && codecov -t ${CODECOV_TOKEN}",
     "cov:check": "nyc report && nyc check-coverage --lines 100 --functions 100 --branches 100",
-
     "doc": "run-s doc:html && opn build/docs/index.html",
     "doc:html": "typedoc src/ --target ES6 --mode file --out build/docs",
     "doc:json": "typedoc src/ --target ES6 --mode file --json build/docs/typedoc.json",
     "doc:publish": "gh-pages -m \"[ci skip] Updates\" -d build/docs"
-
   },
   "engines": {
     "node": ">=8.9"
   },
   "dependencies": {
-    "@microgamma/apigator": "^1.9.32",
-    "@microgamma/loggator": "*",
+    "@microgamma/apigator": "^1.10.0",
+    "@microgamma/loggator": "^1.10.0",
     "fs-extra": "^7.0.1",
     "reflect-metadata": "^0.1.12"
   },
