@@ -1,9 +1,9 @@
 // tslint:disable:only-arrow-functions readonly-array prefer- no-if-statement no-object-mutation no-this
 
-import debug from 'debug';
 import 'reflect-metadata';
+import { getDebugger } from '@microgamma/loggator';
 
-const d = debug('microgamma:apigator:path-parameter');
+const d = getDebugger('microgamma:apigator:path-parameter');
 
 export const PathParameterMetadata = 'PathParameter';
 

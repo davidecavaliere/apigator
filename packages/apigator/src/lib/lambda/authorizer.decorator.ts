@@ -1,12 +1,11 @@
 // tslint:disable:only-arrow-functions readonly-array prefer- no-if-statement no-object-mutation no-this no-object-literal-type-assertion
 
-import debug from 'debug';
 import 'reflect-metadata';
 import { getSingleton } from '../index';
-import { AuthResponseContext, CustomAuthorizerEvent, CustomAuthorizerResult } from 'aws-lambda';
-import { getInjectable } from '../di';
+import { CustomAuthorizerEvent, CustomAuthorizerResult } from 'aws-lambda';
+import { getDebugger } from '@microgamma/loggator';
 
-const d = debug('microgamma:apigator:authorizer');
+const d = getDebugger('microgamma:apigator:authorizer');
 
 export const AuthorizerMetadata = Symbol('Authorizer');
 

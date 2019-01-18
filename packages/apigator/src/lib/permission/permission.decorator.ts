@@ -1,12 +1,11 @@
 // tslint:disable:only-arrow-functions readonly-array prefer- no-if-statement no-object-mutation no-this
 
-import debug from 'debug';
 import 'reflect-metadata';
-import { getSingleton } from '../index';
 import { getArguments } from '../utils';
 import { APIGatewayEvent } from 'aws-lambda';
+import { getDebugger } from '@microgamma/loggator';
 
-const d = debug('microgamma:apigator:permission');
+const d = getDebugger('microgamma:apigator:permission');
 
 export const PermissionMetadata = Symbol('Permission');
 
