@@ -1,12 +1,12 @@
 // tslint:disable:only-arrow-functions readonly-array prefer- no-if-statement no-object-mutation no-this
 
-import debug from 'debug';
 import 'reflect-metadata';
 import { getSingleton } from '../index';
 import { APIGatewayEvent } from 'aws-lambda';
 import { getArguments } from '../utils';
+import { getDebugger } from '@microgamma/loggator';
 
-const d = debug('microgamma:apigator:lambda');
+const d = getDebugger('microgamma:apigator:lambda');
 
 export const LambdaMetadata = Symbol('Lambda');
 
