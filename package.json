@@ -14,6 +14,7 @@
     "test": "run-s test:*",
     "test:lint": "lerna run test:lint",
     "test:unit": "lerna run test:unit",
+    "prerelease": "run-s build",
     "release": "lerna version",
 
     "publish:all": "lerna exec npm publish"
