@@ -1,12 +1,5 @@
-import {
-  EndpointOptions,
-  getAuthorizerMetadataFromClass,
-  getEndpointMetadataFromClass,
-  getLambdaMetadataFromClass,
-  LambdaOptions
-} from '@microgamma/apigator';
+import { EndpointOptions, getAuthorizerMetadataFromClass, getEndpointMetadataFromClass, getLambdaMetadataFromClass, LambdaOptions } from '@microgamma/apigator';
 import { getDebugger } from '@microgamma/loggator';
-
 import fs = require('fs-extra');
 
 
@@ -40,8 +33,10 @@ export class ServerlessApigator {
 
     'before:package:createDeploymentArtifacts': () => {
       debug('this runs before packaging');
-      this.serverless.config.servicePath = this.serverless.service.custom.npmModulePath;
-      debug('servicePath set to', this.serverless.config.servicePath);
+      if (this.serverless.service.custom.npmModulePath) {
+        this.serverless.config.servicePath = this.serverless.service.custom.npmModulePath;
+        debug('servicePath set to', this.serverless.config.servicePath);
+      }
     },
     'after:package:createDeploymentArtifacts': () => {
       debug('this runs after packaging');
@@ -49,12 +44,15 @@ export class ServerlessApigator {
       // now zip package has been created in npmModulePath. need to move it to
       // original servicePath
 
+      if (this.serverless.service.custom.npmModulePath) {
+        this.serverless.config.servicePath = this.servicePath;
+        debug('servicePath set to', this.serverless.config.servicePath);
+        debug('package path', this.serverless.service.package.path);
 
-      this.serverless.config.servicePath = this.servicePath;
-      debug('servicePath set to', this.serverless.config.servicePath);
-      debug('package path', this.serverless.service.package.path);
+        return this.copyPackages();
+      }
 
-      return this.copyPackages();
+      return true;
     },
 
     'after:package:finalize': () => {
