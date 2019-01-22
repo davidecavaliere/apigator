@@ -3,7 +3,7 @@ import { ObjectID } from 'bson';
 import { Collection, connect, MongoClient, MongoClientOptions } from 'mongodb';
 import { BaseModel, getPersistenceMetadata } from '@microgamma/datagator';
 
-const d = getDebugger('microgamma:persistence.service');
+const d = getDebugger('microgamma:persistence:service');
 
 
 interface MongoQuery {

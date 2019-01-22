@@ -1,7 +1,6 @@
 // tslint:disable:no-expression-statement no-object-mutation max-classes-per-file
 import test from 'ava';
-import { Injectable } from './injectable.decorator';
-import { Inject } from './inject.decorator';
+import { Inject, Injectable } from '@microgamma/apigator';
 
 
 @Injectable()
@@ -25,6 +24,7 @@ class TestClassB {
   }
 }
 
+
 class Consumer {
 
   @Inject(TestClassA)
@@ -44,15 +44,7 @@ class Consumer {
 
 }
 
-let consumer: Consumer;
-
-test.beforeEach(() => {
-  consumer = new Consumer();
+test('when target class is not instantiated singletons should not be instantiated', (t) => {
+  t.is(Consumer.prototype.testClassA, undefined);
 });
 
-test('@Inject', (t) => {
-
-  t.is(consumer.testClassA instanceof TestClassA, true);
-  // t.is(consumer.testClassB, {});
-
-});

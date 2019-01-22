@@ -16,7 +16,7 @@ class User extends BaseModel {
 }
 
 @Persistence({
-  uri: 'mongodb://192.168.254.3:27017',
+  uri: 'mongodb://192.168.254.2:27017',
   dbName: 'test',
   collection: 'users',
   model: User
@@ -32,7 +32,7 @@ test.beforeEach(() => {
 
 });
 
-test.skip('can be instantiated', t => {
+test.only('can be instantiated', t => {
   t.plan(2);
   d('instance', instance);
   t.is(instance instanceof UserPersistenceService, true);

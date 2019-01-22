@@ -1,7 +1,7 @@
 import { getDebugger } from '@microgamma/loggator';
 import { MongoClientOptions } from 'mongodb';
 
-const d = getDebugger('microgamma:persistence.decorator');
+const d = getDebugger('microgamma:persistence:decorator');
 
 const PersistenceMetadata = Symbol('Persistence');
 
@@ -15,11 +15,9 @@ export interface PersistenceServiceOptions {
 
 export function Persistence(options: PersistenceServiceOptions): ClassDecorator {
 
-  d('running persistence decorator');
-
   return <TFunction extends Function>(target: TFunction) => {
 
-    d('target', target);
+    d('target', target.name);
     d('options', options);
 
     Reflect.metadata(PersistenceMetadata, options)(target);

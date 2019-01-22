@@ -15,9 +15,9 @@ export interface InjectableOptions {
 }
 
 export function Injectable(options?: InjectableOptions) {
-  // console.log('constructing a class decorator', options)
+
   return <TFunction extends Constructor>(target: TFunction) => {
-    d('injecting class', target.name);
+    d('preparing', target.name, 'for injection');
 
     injectables[target.name] = target;
     Reflect.metadata(InjectableMetadata, options)(target);
@@ -35,8 +35,13 @@ export function getInjectable(className: string | Function): Constructor {
 
   d('getting constructor for', name);
   if (!injectables[name]) {
-    throw Error(`${className} is not available for injection. Did you forget to annotate it with @Injectable?`);
+    throw Error(`${name} is not available for injection. Did you forget to annotate it with @Injectable?`);
   }
 
   return injectables[name];
 }
+
+export function getInjectables() {
+  return injectables;
+}
+

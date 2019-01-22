@@ -16,7 +16,6 @@
     "test:unit": "lerna run test:unit",
     "prerelease": "run-s build",
     "release": "lerna version",
-
     "publish:all": "lerna exec npm publish"
   },
   "engines": {
@@ -27,6 +26,7 @@
     "@types/node": "^10.12.18",
     "@types/sinon": "^5.0.1",
     "ava": "^1.0.0-beta.5.1",
+    "ava-ts": "^0.25.2",
     "codecov": "^3.0.2",
     "cz-conventional-changelog": "^2.1.0",
     "debug": "^3.1.0",
@@ -45,8 +45,8 @@
     "ts-jest": "^23.10.5",
     "ts-node": "^7.0.1",
     "tslint": "^5.10.0",
-    "tslint-immutable": "^4.5.4",
     "tslint-config-prettier": "^1.17.0",
+    "tslint-immutable": "^4.5.4",
     "typedoc": "^0.11.1",
     "typescript": "^3.2.2",
     "yarn": "^1.12.3"

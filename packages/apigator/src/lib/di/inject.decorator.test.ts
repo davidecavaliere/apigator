@@ -1,26 +1,29 @@
 // tslint:disable:no-expression-statement no-object-mutation max-classes-per-file
-import { Injectable } from './injectable.decorator';
-import { Inject } from './inject.decorator';
 
+
+import { getInjectable, getSingletons, Inject, Injectable } from './';
+import { getDebugger } from '@microgamma/loggator';
+
+const d = getDebugger('microgamma:inject:decorator:spec');
 
 @Injectable()
 class TestClassA {
   constructor() {
-    console.log('this is the constructor of TestClassA');
+    d('this is the constructor of TestClassA');
   }
 
   public sayHello(className: string) {
-    console.log(`Hello from A to ${className}`);
+    d(`Hello from A to ${className}`);
   }
 }
 @Injectable()
 class TestClassB {
   constructor() {
-    console.log('this is the constructor of TestClassB');
+    d('this is the constructor of TestClassB');
   }
 
   public sayHello(className: string) {
-    console.log(`Hello from B to ${className}`);
+    d(`Hello from B to ${className}`);
   }
 }
 
@@ -36,23 +39,40 @@ class Consumer {
   public testClassB: TestClassB;
 
   constructor() {
-    console.log('this is the constructor of Consumer');
-    this.testClassA.sayHello('Consumer');
+    d('this is the constructor of Consumer');
+    this.testClassA.sayHello('consumer');
     this.testClassB.sayHello('Consumer');
   }
 
 }
 
-describe('inject decorator', () => {
-  let consumer: Consumer;
+describe('@Injectable', () => {
 
-  beforeEach(() => {
-    consumer = new Consumer();
+
+  it('should make injectables avaible for injection', () => {
+    expect(getInjectable(TestClassA)).toEqual(TestClassA);
+    expect(getInjectable(TestClassB)).toEqual(TestClassB);
   });
 
-  it('@Inject', () => {
+  it('injectables should not be instantiated yet', () => {
+    expect(getSingletons()).toEqual({});
+  });
 
-    expect(consumer.testClassA instanceof TestClassA).toBeTruthy();
+});
+
+describe('inject decorator', () => {
+
+
+  it('if consumer is not instantiated injectable should be neither', () => {
+    expect(getSingletons()).toEqual({});
+
+  });
+
+  fit('should instantiate injectables after consumer class is instantiated', () => {
+    expect(getInjectable(TestClassA)).toBeDefined();
+    const consumer = new Consumer();
+    expect(typeof consumer.testClassA).toEqual(TestClassA);
+
 
   });
 

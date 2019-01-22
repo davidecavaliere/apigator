@@ -25,8 +25,9 @@
     "fix": "run-s fix:*",
     "fix:prettier": "prettier \"src/**/*.ts\" --write",
     "fix:tslint": "tslint --fix --project .",
-    "test": "run-s test:*",
+    "test": "run-s test:* && ava",
     "test:unit": "nyc --silent ava",
+    "test:watch": "ava-ts --watch",
     "test:lint": "tslint --project . ",
     "watch": "run-s clean build:main && run-p \"build:main -- -w\" \"test:unit -- --watch\"",
     "cov": "run-s build test:unit cov:html && opn coverage/index.html",
@@ -66,17 +67,5 @@
     "@types/mongodb": "^3.1.18",
     "mongodb": "^3.1.10",
     "reflect-metadata": "^0.1.12"
-  },
-  "ava": {
-    "files": [
-      "./lib/**/*.spec.js"
-    ],
-    "compileEnhanments": false,
-    "extensions": [
-      "ts"
-    ],
-    "require": [
-      "ts-node/register"
-    ]
   }
 }

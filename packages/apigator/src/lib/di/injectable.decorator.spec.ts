@@ -6,7 +6,11 @@ import { getInjectable, Injectable } from './injectable.decorator';
 @Injectable()
 class TestClass {}
 
-class NotAvailable {}
+class NotAvailable {
+  public test() {
+    return 12;
+  }
+}
 
 
 test('@Injectable adds a class into list of injectables', (t) => {
@@ -23,5 +27,5 @@ test('throw if not available', (t) => {
     getInjectable(NotAvailable)
   }, Error);
 
-  t.deepEqual(error, Error('class NotAvailable {} is not available for injection. Did you forget to annotate it with @Injectable?'));
+  t.deepEqual(error, Error('NotAvailable is not available for injection. Did you forget to annotate it with @Injectable?'));
 });

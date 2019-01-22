@@ -18,6 +18,7 @@
     "build": "tsc -p tsconfig.json",
     "test": "run-s test:*",
     "test:unit": "nyc --silent ava",
+    "test:watch": "jest",
     "test:lint": "tslint --project . ",
     "test:unit:debug": "node --inspect  nyc --silent ava",
     "watch": "run-s clean build && run-p \"build -- -w\" \"test:unit -- --watch\"",
