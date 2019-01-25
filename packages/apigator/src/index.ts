@@ -1,4 +1,3 @@
-export * from './lib/di';
 export * from './lib/endpoint/endpoint.decorator';
 export * from './lib/lambda/lambda.decorator';
 export * from './lib/permission/permission.decorator';

@@ -19,7 +19,7 @@ class TestClass {
 
 describe('bootstrap', () => {
 
-  let inst: TestClass;
+  let inst;
 
   beforeEach(() => {
     inst = bootstrap(TestClass);

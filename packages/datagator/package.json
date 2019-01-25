@@ -8,12 +8,6 @@
   "main": "lib/index.js",
   "typings": "lib/index.d.ts",
   "module": "lib/index.js",
-  "directories": {
-    "lib": "lib"
-  },
-  "files": [
-    "lib"
-  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/davidecavaliere/apigator.git"
@@ -67,5 +61,47 @@
     "@types/mongodb": "^3.1.18",
     "mongodb": "^3.1.10",
     "reflect-metadata": "^0.1.12"
+  },
+  "ava": {
+    "files": [
+      "./lib/**/*.spec.js"
+    ],
+    "compileEnhanments": false,
+    "extensions": [
+      "ts"
+    ],
+    "require": [
+      "ts-node/register"
+    ]
+  },
+  "config": {
+    "commitizen": {
+      "path": "cz-conventional-changelog"
+    }
+  },
+  "nyc": {
+    "exclude": [
+      "**/*.spec.js"
+    ]
+  },
+  "jest": {
+    "roots": [
+      "<rootDir>/src"
+    ],
+    "transform": {
+      "^.+\\.ts?$": "ts-jest"
+    },
+    "testRegex": "(/__tests__/.*|(\\.|/)(test))\\.ts?$",
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js",
+      "jsx",
+      "json",
+      "node"
+    ],
+    "reporters": [
+      "default"
+    ]
   }
 }

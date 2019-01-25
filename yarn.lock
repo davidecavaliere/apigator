@@ -1056,19 +1056,26 @@
     write-file-atomic "^2.3.0"
 
 "@microgamma/apigator@file:packages/apigator":
-  version "1.10.5"
+  version "1.10.7"
   dependencies:
+    "@microgamma/digator" "^1.10.3"
     "@microgamma/loggator" "^1.10.3"
     "@types/aws-lambda" "^8.10.11"
     reflect-metadata "^0.1.12"
     rxjs "^6.3.3"
 
 "@microgamma/datagator@file:packages/datagator":
-  version "1.10.3"
+  version "1.10.7"
   dependencies:
     "@microgamma/loggator" "^1.10.3"
     "@types/mongodb" "^3.1.18"
     mongodb "^3.1.10"
+    reflect-metadata "^0.1.12"
+
+"@microgamma/digator@file:packages/digator":
+  version "1.10.7"
+  dependencies:
+    "@microgamma/loggator" "^1.10.3"
     reflect-metadata "^0.1.12"
 
 "@microgamma/loggator@file:packages/loggator":
@@ -1079,9 +1086,9 @@
     reflect-metadata "^0.1.12"
 
 "@microgamma/serverless-apigator@file:packages/serverless-apigator":
-  version "1.10.6"
+  version "1.10.7"
   dependencies:
-    "@microgamma/apigator" "^1.10.5"
+    "@microgamma/apigator" "^1.10.7"
     "@microgamma/loggator" "^1.10.3"
     fs-extra "^7.0.1"
     reflect-metadata "^0.1.12"

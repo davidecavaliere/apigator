@@ -1,5 +1,5 @@
 {
-  "name": "@microgamma/apigator",
+  "name": "@microgamma/digator",
   "version": "1.10.7",
   "description": "run your api code everywhere",
   "main": "lib/index.js",
@@ -17,16 +17,15 @@
     "prebuild": "run-s clean",
     "build": "tsc -p tsconfig.json",
     "test": "run-s test:*",
-    "test:unit": "nyc --silent ava",
-    "test:watch": "jest",
     "test:lint": "tslint --project . ",
-    "test:unit:debug": "node --inspect  nyc --silent ava",
-    "watch": "run-s clean build && run-p \"build -- -w\" \"test:unit -- --watch\"",
-    "watch:debug": "run-s clean build:main && run-p \"build:main -- -w\" \"test:unit:debug -- --watch\"",
+    "test:unit": "jest --coverage",
+    "test:watch": "jest --watch",
+    "test:unit:debug": "node --inspect  jest --watch",
+
+    "watch": "run-s clean build && run-p \"build -- -w\" \"test:watch\"",
+
     "cov": "run-s build test:unit cov:html && opn coverage/index.html",
-    "cov:html": "nyc report --reporter=html",
-    "cov:send": "nyc report --reporter=lcov > coverage.lcov && codecov",
-    "cov:check": "nyc report && nyc check-coverage --lines 100 --functions 100 --branches 100",
+
     "doc": "run-s doc:html && opn build/docs/index.html",
     "doc:html": "typedoc src/ --target ES6 --mode file --out build/docs",
     "doc:json": "typedoc src/ --target ES6 --mode file --json build/docs/typedoc.json",
@@ -35,33 +34,8 @@
     "prepare-release": "run-s all version doc:publish"
   },
   "dependencies": {
-    "@microgamma/digator": "^1.10.7",
     "@microgamma/loggator": "^1.10.3",
-    "@types/aws-lambda": "^8.10.11",
-    "reflect-metadata": "^0.1.12",
-    "rxjs": "^6.3.3"
-  },
-  "ava": {
-    "files": [
-      "./lib/**/*.spec.js"
-    ],
-    "compileEnhanments": false,
-    "extensions": [
-      "ts"
-    ],
-    "require": [
-      "ts-node/register"
-    ]
-  },
-  "config": {
-    "commitizen": {
-      "path": "cz-conventional-changelog"
-    }
-  },
-  "nyc": {
-    "exclude": [
-      "**/*.spec.js"
-    ]
+    "reflect-metadata": "^0.1.12"
   },
   "jest": {
     "roots": [
@@ -70,7 +44,7 @@
     "transform": {
       "^.+\\.ts?$": "ts-jest"
     },
-    "testRegex": "(/__tests__/.*|(\\.|/)(test))\\.ts?$",
+    "testRegex": "(/__tests__/.*|(\\.|/)(test|spec))\\.ts?$",
     "moduleFileExtensions": [
       "ts",
       "tsx",
@@ -81,6 +55,10 @@
     ],
     "reporters": [
       "default"
+    ],
+    "collectCoverageFrom": [
+      "**/*.ts",
+      "!**/index.ts"
     ]
   }
 }

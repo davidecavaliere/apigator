@@ -1,6 +1,6 @@
 // tslint:disable: no-object-mutation no-if-statement readonly-array no-mixed-interface object-literal-shorthand only-arrow-functions
 
-import { getInjectable, getInjectables } from './';
+import { Constructor, getInjectable, getInjectables } from './';
 import { getDebugger } from '@microgamma/loggator';
 
 const d = getDebugger('microgamma:di:inject');
@@ -15,23 +15,21 @@ export function Inject(classDef): PropertyDecorator {
     Object.defineProperty(target, propertyKey, {
       get: () => {
 
-        d('injectables are', getInjectables());
-
-        const constructor = getInjectable(classDef);
-        d('got constructor', constructor.name);
-        if (!singletons[constructor.name]) {
-          d( `${constructor.name} singleton not found. creating....`);
-          singletons[constructor.name] = new constructor();
-        }
-        //
-        return singletons[constructor.name];
+        return getSingleton(classDef);
       }
     });
 
-
-
-
   }
+}
+
+export function getSingleton(className) {
+
+  if (!singletons[className.name]) {
+    d( `${className.name} singleton not found. creating....`);
+    singletons[className.name] = new className();
+  }
+  //
+  return singletons[className.name];
 }
 
 export function getSingletons() {

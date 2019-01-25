@@ -1,7 +1,7 @@
 // tslint:disable:no-expression-statement no-object-mutation max-classes-per-file
 
 
-import { getInjectable, getSingletons, Inject, Injectable } from './';
+import { getInjectable, getSingleton, getSingletons, Inject, Injectable } from './';
 import { getDebugger } from '@microgamma/loggator';
 
 const d = getDebugger('microgamma:inject:decorator:spec');
@@ -30,7 +30,7 @@ class TestClassB {
 class Consumer {
 
   @Inject(TestClassA)
-  public testClassA: TestClassA;
+  public testClassA;
 
   @Inject(TestClassA)
   public testClassA2: TestClassA;
@@ -60,6 +60,8 @@ describe('@Injectable', () => {
 
 });
 
+
+
 describe('inject decorator', () => {
 
 
@@ -68,11 +70,18 @@ describe('inject decorator', () => {
 
   });
 
-  fit('should instantiate injectables after consumer class is instantiated', () => {
+  it('should instantiate injectables after consumer class is instantiated', () => {
     expect(getInjectable(TestClassA)).toBeDefined();
     const consumer = new Consumer();
-    expect(typeof consumer.testClassA).toEqual(TestClassA);
+    expect(consumer.testClassA instanceof TestClassA).toBeTruthy();
 
+  });
+
+  describe('getSingleton', () => {
+
+    it('should instantiate a singleton if does not exist yet', () => {
+      expect(getSingleton(TestClassA) instanceof TestClassA).toBeTruthy();
+    });
 
   });
 

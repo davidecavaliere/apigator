@@ -1,7 +1,7 @@
 import { getColumnMetadata } from './column.decorator';
 import { getDebugger } from '@microgamma/loggator';
 
-const d = getDebugger('microgamma:model.ts');
+const d = getDebugger('microgamma:model');
 
 export class BaseModel {
 
@@ -14,7 +14,7 @@ export class BaseModel {
 
   public toJson?(): any {
     const columns = getColumnMetadata(this);
-    console.log('columns meta', columns);
+    d('columns meta', columns);
 
     const json = {};
 

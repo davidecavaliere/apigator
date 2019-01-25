@@ -1,10 +1,10 @@
 // tslint:disable:only-arrow-functions readonly-array prefer- no-if-statement no-object-mutation no-this
 
 import 'reflect-metadata';
-import { getSingleton } from '../index';
 import { APIGatewayEvent } from 'aws-lambda';
 import { getArguments } from '../utils';
 import { getDebugger } from '@microgamma/loggator';
+import { getSingleton } from '@microgamma/digator';
 
 const d = getDebugger('microgamma:apigator:lambda');
 

@@ -6,8 +6,6 @@
     "types": ["node", "jest"]
   },
   "references": [
-    { "path": "../loggator" },
-    { "path": "../digator" }
-
+    { "path": "../loggator" }
   ]
 }

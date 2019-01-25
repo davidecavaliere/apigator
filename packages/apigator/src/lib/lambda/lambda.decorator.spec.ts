@@ -1,7 +1,7 @@
 // tslint:disable:no-expression-statement no-object-mutation
 import test from 'ava';
 import { getLambdaMetadata, getLambdaMetadataFromClass, Lambda, LambdaOptions } from './lambda.decorator';
-import { Endpoint, getEndpointMetadataFromClass } from '../../';
+import { Endpoint } from '../../';
 import { bootstrap } from '../index';
 
 const option1: LambdaOptions = {
@@ -34,7 +34,7 @@ class TestClass {
   }
 }
 
-let instance: TestClass;
+let instance;
 
 test.beforeEach(() => {
   instance = bootstrap(TestClass);

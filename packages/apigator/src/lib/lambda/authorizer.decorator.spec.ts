@@ -42,7 +42,7 @@ class TestClass {
   }
 }
 
-let instance: TestClass;
+let instance;
 
 test.beforeEach(() => {
   instance = bootstrap(TestClass);
