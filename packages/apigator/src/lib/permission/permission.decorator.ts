@@ -13,24 +13,6 @@ export interface PermissionOptions {
   allow: (...args: any[]) => PromiseLike<any>;
 }
 
-function getApiGatewayEvent(args): APIGatewayEvent {
-  // TODO add check
-  return args[0];
-}
-
-function extractBody(args: any[]) {
-
-  return getApiGatewayEvent(args).body;
-}
-
-function extractPathParams(args: any[]) {
-  return getApiGatewayEvent(args).path;
-}
-
-function extractHeaderParams(args: any[]) {
-  return getApiGatewayEvent(args).headers;
-}
-
 export function Permission(options: PermissionOptions): MethodDecorator {
 
 
@@ -38,20 +20,30 @@ export function Permission(options: PermissionOptions): MethodDecorator {
     // d('target', target);
     // d('function name', key);
 
-    const permissions = getPermissionMetadata(target).concat(options);
-
-    Reflect.defineMetadata(PermissionMetadata, permissions, target);
+    Reflect.defineMetadata(PermissionMetadata, options, target);
 
 
     const originalMethod = descriptor.value;
     d('original method', originalMethod);
+
     const originalArguments = getArguments(originalMethod);
     d('original arguments', originalArguments);
 
     d('allow arguments are ', getArguments(options.allow));
-    descriptor.value = function() {
+
+    descriptor.value = async function() {
       // d('this is', this);
       d('arguments are', arguments);
+
+      // running allow function
+      const isAllowed = await options.allow.apply(this, arguments);
+
+      if (isAllowed) {
+        return originalMethod.apply(this, arguments);
+      }
+
+      throw new Error('method not allowed');
+
     };
 
     return descriptor;
@@ -60,10 +52,10 @@ export function Permission(options: PermissionOptions): MethodDecorator {
 
 export function getPermissionMetadata(instance) {
   const metadata = Reflect.getMetadata(PermissionMetadata, instance);
-  return metadata ? [].concat(metadata) : [];
+  return metadata || {};
 }
 
 export function getPermissionMetadataFromClass(klass) {
   const metadata = Reflect.getMetadata(PermissionMetadata, klass.prototype);
-  return metadata ? [].concat(metadata) : [];
+  return metadata || {};
 }

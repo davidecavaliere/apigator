@@ -13,7 +13,7 @@
     "pretest": "run-s build",
     "test": "run-s test:*",
     "test:lint": "lerna run test:lint",
-    "test:unit": "lerna run test:unit",
+    "test:unit": "lerna run test:unit --parallel",
     "prerelease": "run-s build",
     "release": "lerna version",
     "publish:all": "lerna exec npm publish"
@@ -56,6 +56,7 @@
     "@microgamma/datagator": "file:packages/datagator",
     "@microgamma/digator": "file:packages/digator",
     "@microgamma/loggator": "file:packages/loggator",
-    "@microgamma/serverless-apigator": "file:packages/serverless-apigator"
+    "@microgamma/serverless-apigator": "file:packages/serverless-apigator",
+    "jest-stare": "^1.11.1"
   }
 }

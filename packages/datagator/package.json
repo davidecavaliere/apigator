@@ -19,7 +19,7 @@
     "fix": "run-s fix:*",
     "fix:prettier": "prettier \"src/**/*.ts\" --write",
     "fix:tslint": "tslint --fix --project .",
-    "test": "run-s test:* && ava",
+    "test": "run-s test:*",
     "test:unit": "nyc --silent ava",
     "test:watch": "ava-ts --watch",
     "test:lint": "tslint --project . ",

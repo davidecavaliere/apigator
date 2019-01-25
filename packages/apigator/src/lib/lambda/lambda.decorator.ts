@@ -1,10 +1,9 @@
-// tslint:disable:only-arrow-functions readonly-array prefer- no-if-statement no-object-mutation no-this
+// tslint:disable:only-arrow-functions readonly-array prefer- no-if-statement no-object-mutation no-this no-this-assignment
 
 import 'reflect-metadata';
 import { APIGatewayEvent } from 'aws-lambda';
 import { getArguments } from '../utils';
 import { getDebugger } from '@microgamma/loggator';
-import { getSingleton } from '@microgamma/digator';
 
 const d = getDebugger('microgamma:apigator:lambda');
 
@@ -26,16 +25,16 @@ function getApiGatewayEvent(args): APIGatewayEvent {
   return args[0];
 }
 
-function extractBody(args: any[]) {
+function extractBody(args) {
 
   return getApiGatewayEvent(args).body;
 }
 
-function extractPathParams(args: any[]) {
+function extractPathParams(args) {
   return getApiGatewayEvent(args).path;
 }
 
-function extractHeaderParams(args: any[]) {
+function extractHeaderParams(args) {
   return getApiGatewayEvent(args).headers;
 }
 
@@ -56,7 +55,9 @@ export function Lambda(options: LambdaOptions) {
     const functionArgumentsNames = getArguments(originalFunction);
 
     // real framework that is being used to ran the function
-    descriptor.value = async (...args: any[]) => {
+    descriptor.value = async function () {
+      const args = arguments;
+
       // here we have an array of string with names of arguments.
       /*
         i.e.: if function is defined such as:
@@ -93,7 +94,7 @@ export function Lambda(options: LambdaOptions) {
        */
       d('actual args are: ', args);
 
-      const instance = getSingleton(target.constructor.name);
+      const instance = this;
       d('current instance is:', instance);
 
       const methodMetadata = getLambdaMetadata(instance);

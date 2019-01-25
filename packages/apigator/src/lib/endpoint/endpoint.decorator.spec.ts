@@ -6,13 +6,12 @@ const options: EndpointOptions = {
 };
 
 @Endpoint(options)
-class TestClass {
+class TestClass {}
 
-}
-
-let instance: TestClass;
 
 describe('endpoint decorator', () => {
+  let instance;
+
   beforeEach(() => {
     instance = new TestClass();
   });

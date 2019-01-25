@@ -1,9 +1,8 @@
-// tslint:disable:only-arrow-functions readonly-array prefer- no-if-statement no-object-mutation no-this no-object-literal-type-assertion
+// tslint:disable:only-arrow-functions readonly-array prefer- no-if-statement no-object-mutation no-this no-object-literal-type-assertion no-this-assignment
 
 import 'reflect-metadata';
 import { CustomAuthorizerEvent, CustomAuthorizerResult } from 'aws-lambda';
 import { getDebugger } from '@microgamma/loggator';
-import { getSingleton } from '@microgamma/digator';
 
 const d = getDebugger('microgamma:apigator:authorizer');
 
@@ -28,10 +27,11 @@ export function Authorizer(options?: AuthorizerOptions) {
     const originalFunction = descriptor.value;
     d('original function is', originalFunction.name);
 
-    descriptor.value = async (...args: any[]) => {
+    descriptor.value = async function () {
+      const args = arguments;
+
       try {
-        d('getting singleton for ', target.constructor.name);
-        const instance = getSingleton(target.constructor.name);
+        const instance = this;
         d('current instance is:', instance);
 
         d('original args are', args);

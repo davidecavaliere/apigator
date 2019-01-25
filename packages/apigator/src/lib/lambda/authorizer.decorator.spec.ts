@@ -1,9 +1,9 @@
 // tslint:disable:no-expression-statement no-object-mutation
 import test from 'ava';
 import { Lambda, LambdaOptions } from './lambda.decorator';
-import { Endpoint, getAuthorizerMetadataFromClass } from '../../';
+import { Authorizer, Endpoint, getAuthorizerMetadataFromClass } from '../../';
 import { bootstrap } from '../index';
-import { Authorizer, getAuthorizerMetadata } from './authorizer.decorator';
+import { Injectable } from '@microgamma/digator';
 
 const option1: LambdaOptions = {
   method: 'get',
@@ -36,32 +36,36 @@ class TestClass {
 
   @Authorizer()
   public async authorize(token, resource): Promise<boolean> {
-    console.log('token', token);
-    console.log('resource', resource);
     return token.scope.some(value => value === resource);
   }
 }
 
-let instance;
 
-test.beforeEach(() => {
-  instance = bootstrap(TestClass);
-});
+describe('authorizer decorator', () => {
+  let instance;
 
-test('should get metadata from class', (t) => {
-  t.deepEqual(getAuthorizerMetadataFromClass(TestClass), {name: 'authorize'});
-});
+  beforeEach(() => {
 
-test('authorize function', (t) => {
-  t.plan(1);
+    instance = new TestClass();
 
-  return instance.authorize.apply(instance, [{
-    authorizationToken: {
-      scope: ['some-method-arn']
-    },
-    methodArn: 'some-method-arn'
-  }]).then((value) => {
-    t.deepEqual(value, {
+  });
+
+  it('should get metadata from class', () => {
+    expect(getAuthorizerMetadataFromClass(TestClass)).toEqual({name: 'authorize'});
+  });
+
+
+  it('should run the authorizer', async () => {
+
+    const result = await instance.authorize.apply(instance, [{
+      authorizationToken: {
+        scope: ['some-method-arn']
+      },
+      methodArn: 'some-method-arn'
+    }]);
+
+
+    expect(result).toEqual({
 
       principalId: true,
       policyDocument: {
@@ -79,7 +83,10 @@ test('authorize function', (t) => {
         user: true
       }
     });
+
   });
+
+
 });
 
 

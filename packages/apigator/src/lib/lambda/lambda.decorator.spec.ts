@@ -34,40 +34,42 @@ class TestClass {
   }
 }
 
-let instance;
 
-test.beforeEach(() => {
-  instance = bootstrap(TestClass);
-});
+describe('lambda.decorator', () => {
+  let instance;
 
-test('lambda decorator', t => {
-  // console.log('instance', instance);
-  t.is(instance instanceof TestClass, true);
-});
+  beforeEach(() => {
+    instance = new TestClass();
 
-test('should store some metadata', t => {
-  t.deepEqual(getLambdaMetadata(instance), [option1, option2]);
-});
-
-test('should get metadata from class', (t) => {
-  t.deepEqual(getLambdaMetadataFromClass(TestClass), [option1, option2]);
-});
-
-test('findAll method should return 2: promised', t => {
-  t.plan(1);
-
-  return instance.findAll.apply(null, [
-    { // aws event
-      path: {
-        arg1: 1,
-        arg2: 2,
-        arg3: 3
-      }
-    },
-    { context: 'a' } // context
-  ]).then((value) => {
-    t.is(value, 'base123');
   });
 
 
+  it('should store some metadata', () => {
+    expect(getLambdaMetadata(instance)).toEqual([option1, option2]);
+  });
+
+  it('should get metadata from class', () => {
+    expect(getLambdaMetadataFromClass(TestClass)).toEqual([option1, option2]);
+  });
+
+  it('findAll method should return 2: promised', async () => {
+
+    const resp = await instance.findAll.apply(instance, [
+      { // aws event
+        path: {
+          arg1: 1,
+          arg2: 2,
+          arg3: 3
+        }
+      },
+      { context: 'a' } // context
+    ]);
+
+    expect(resp).toEqual('base123');
+
+  });
 });
+
+
+
+
