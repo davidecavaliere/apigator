@@ -1,6 +1,6 @@
 {
   "name": "@microgamma/apigator",
-  "version": "1.10.8",
+  "version": "1.10.9",
   "description": "run your api code everywhere",
   "main": "lib/index.js",
   "typings": "lib/index.d.ts",
@@ -16,12 +16,10 @@
   "scripts": {
     "prebuild": "run-s clean",
     "build": "tsc -p tsconfig.json",
-
     "test": "jest --coverage",
     "test:unit": "jest --coverage",
     "test:watch": "jest --watch",
     "test:lint": "tslint --project . ",
-
     "cov": "run-s build test:unit cov:html && opn coverage/index.html",
     "cov:html": "nyc report --reporter=html",
     "cov:send": "nyc report --reporter=lcov > coverage.lcov && codecov",
@@ -64,7 +62,10 @@
     "reporters": [
       "default"
     ],
-    "coverageReporters": ["json", "html"],
+    "coverageReporters": [
+      "json",
+      "html"
+    ],
     "collectCoverageFrom": [
       "**/*.ts",
       "!**/index.ts"
