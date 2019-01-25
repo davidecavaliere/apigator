@@ -1,6 +1,6 @@
 {
   "name": "@microgamma/digator",
-  "version": "1.10.7",
+  "version": "1.10.8",
   "description": "run your api code everywhere",
   "main": "lib/index.js",
   "typings": "lib/index.d.ts",
@@ -21,11 +21,8 @@
     "test:unit": "jest --coverage",
     "test:watch": "jest --watch",
     "test:unit:debug": "node --inspect  jest --watch",
-
     "watch": "run-s clean build && run-p \"build -- -w\" \"test:watch\"",
-
     "cov": "run-s build test:unit cov:html && opn coverage/index.html",
-
     "doc": "run-s doc:html && opn build/docs/index.html",
     "doc:html": "typedoc src/ --target ES6 --mode file --out build/docs",
     "doc:json": "typedoc src/ --target ES6 --mode file --json build/docs/typedoc.json",
