@@ -2,10 +2,12 @@
 
 
 import { bootstrap, Endpoint, Lambda } from '../';
+import { Injectable } from '@microgamma/digator';
 
 @Endpoint({
   name: 'test-service'
 })
+@Injectable()
 class TestClass {
   @Lambda({
     method: 'get',
